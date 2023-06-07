@@ -1,9 +1,13 @@
 de:
+  error:
+    no_permission: "Du hast keine Berechtigung dazu!"
   default:
     hello: "Hallo"
     plugin_enabled: "Plugin aktiviert"
     plugin_disabled: "Plugin deaktiviert"
 en:
+  error:
+    no_permission: "You don't have the permission to do that!"
   default:
       hello: "Hello"
       plugin_enabled: "Plugin enabled"
