@@ -1,10 +1,10 @@
 de:
   default:
-    hello: "Hallo",
-    plugin_enabled: "Plugin aktiviert",
-    plugin_disabled: "Plugin deaktiviert",
+    hello: "Hallo"
+    plugin_enabled: "Plugin aktiviert"
+    plugin_disabled: "Plugin deaktiviert"
 en:
   default:
-      hello: "Hello",
-      plugin_enabled: "Plugin enabled",
+      hello: "Hello"
+      plugin_enabled: "Plugin enabled"
       plugin_disabled: "Plugin disabled"
