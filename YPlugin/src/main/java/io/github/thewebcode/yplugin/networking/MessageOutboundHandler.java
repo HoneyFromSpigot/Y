@@ -1,5 +1,7 @@
 package io.github.thewebcode.yplugin.networking;
 
+import io.github.thewebcode.yplugin.utils.PacketDataUtil;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
@@ -24,6 +26,8 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
     public MessageOutboundHandler(Player player) {
         this.player = player;
         this.playerUUID = player.getUniqueId();
+
+        attach(player);
     }
 
     private void detach(Player player){
@@ -65,7 +69,8 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
         String packet = payload.c.toString();
         if(packet.contains("yfabric")){
             String packetName = packet.replace("yfabric:", "");
-            System.out.println("Got packet: " + packetName);
+
+            PacketDataUtil.handlePacket(packetName, payload);
         }
     }
 

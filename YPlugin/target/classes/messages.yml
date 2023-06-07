@@ -9,6 +9,6 @@ en:
   error:
     no_permission: "You don't have the permission to do that!"
   default:
-      hello: "Hello"
-      plugin_enabled: "Plugin enabled"
-      plugin_disabled: "Plugin disabled"
+    hello: "Hello"
+    plugin_enabled: "Plugin enabled"
+    plugin_disabled: "Plugin disabled"
