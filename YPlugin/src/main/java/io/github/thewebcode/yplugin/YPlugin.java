@@ -5,6 +5,7 @@ import io.github.thewebcode.yplugin.event.Eventlistener;
 import io.github.thewebcode.yplugin.utils.FileService;
 import io.github.thewebcode.yplugin.utils.LanguageService;
 import io.github.thewebcode.yplugin.utils.LoggingService;
+import io.github.thewebcode.yplugin.utils.RemoteSessionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,6 +16,7 @@ public final class YPlugin extends JavaPlugin {
     private FileService fileService;
     private LoggingService loggingService;
     private LanguageService languageService;
+    private RemoteSessionManager remoteSessionManager;
 
     @Override
     public void onEnable() {
@@ -22,6 +24,7 @@ public final class YPlugin extends JavaPlugin {
         this.loggingService = new LoggingService();
         this.fileService = new FileService();
         this.languageService = new LanguageService();
+        this.remoteSessionManager = new RemoteSessionManager();
 
         registerCommands();
         registerEvents();
@@ -53,6 +56,10 @@ public final class YPlugin extends JavaPlugin {
 
     public LanguageService getLanguageService() {
         return languageService;
+    }
+
+    public RemoteSessionManager getRemoteSessionManager() {
+        return remoteSessionManager;
     }
 
     public static YPlugin getInstance() {

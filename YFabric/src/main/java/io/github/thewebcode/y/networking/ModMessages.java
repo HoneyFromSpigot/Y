@@ -23,6 +23,8 @@ public class ModMessages {
     public static final Identifier UPDATE_SETTINGS = new Identifier("yfabric", "update_settings");
     public static final Identifier START_LOGIN = new Identifier("yplugin", "start_login");
     public static final Identifier HANDSHAKE_C2S = new Identifier("yfabric", "handshake_c2s");
+    public static final Identifier HANDSHAKE_S2C = new Identifier("yplugin", "handshake_s2c");
+    public static final Identifier OPEN_SETTINGS = new Identifier("yplugin", "open_settings");
 
     public static void registerC2SPackets(){
         ServerPlayNetworking.registerGlobalReceiver(Y_FABRIC_HELLO, HelloC2SPacket::receive);
@@ -34,6 +36,19 @@ public class ModMessages {
         ClientPlayNetworking.registerGlobalReceiver(START_LOGIN, (client, handler, buf, responseSender) -> {
             MinecraftClient.getInstance().execute(() -> {
                 MinecraftClient.getInstance().setScreen(new LoginScreen(new LoginGuiDescription()));
+            });
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(HANDSHAKE_S2C, (client, handler, buf, responseSender) -> {
+            int length = buf.readableBytes();
+            byte[] bytes = new byte[length];
+            buf.readBytes(bytes);
+            YFabricMod.REMOTE_SERVER_KEY = new String(bytes);
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(OPEN_SETTINGS, (client, handler, buf, responseSender) -> {
+            MinecraftClient.getInstance().execute(() -> {
+                //TODO: Open settings screen
             });
         });
     }

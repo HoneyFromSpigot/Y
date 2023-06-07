@@ -22,7 +22,7 @@ public class FileService{
 
                 this.config = YamlConfiguration.loadConfiguration(configFile);
 
-                String pw = genPassword(7);
+                String pw = EncryptionUtil.genPassword(7);
                 config.set("master-password", pw);
                 config.save(configFile);
             }
@@ -33,13 +33,7 @@ public class FileService{
         this.config = YamlConfiguration.loadConfiguration(configFile);
     }
 
-    public String genPassword(int length){
-        String password = "";
-        for(int i = 0; i < length; i++){
-            password += (char) (Math.random() * 26 + 97);
-        }
-        return password;
-    }
+
 
 
     public void save(YamlConfiguration yamlConfiguration, File file){
