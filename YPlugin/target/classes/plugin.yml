@@ -1,0 +1,4 @@
+name: YPlugin
+version: '1.0'
+main: io.github.thewebcode.yplugin.YPlugin
+api-version: 1.19

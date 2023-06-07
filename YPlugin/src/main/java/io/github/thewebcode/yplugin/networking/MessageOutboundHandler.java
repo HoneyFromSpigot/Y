@@ -3,7 +3,6 @@ package io.github.thewebcode.yplugin.networking;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
-import io.netty.channel.ChannelPromise;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.protocol.game.PacketPlayInCustomPayload;
@@ -27,7 +26,21 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
         this.playerUUID = player.getUniqueId();
     }
 
-    public static void attach(Player player) {
+    private void detach(Player player){
+        try{
+            EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+            PlayerConnection connection = entityPlayer.b;
+
+            Field field = connection.getClass().getField("h");
+            NetworkManager networkManager = (NetworkManager) field.get(connection);
+            ChannelPipeline pipeline = networkManager.m.pipeline();
+            pipeline.remove(NAME);
+        } catch (NoSuchFieldException | IllegalAccessException e){
+            e.printStackTrace();
+        } catch (NoSuchElementException ignored) {}
+    }
+
+    private void attach(Player player) {
         try {
             EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
             PlayerConnection connection = entityPlayer.b;
@@ -48,7 +61,7 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
         }
     }
 
-    private static void read(PacketPlayInCustomPayload payload){
+    private void read(PacketPlayInCustomPayload payload){
         String packet = payload.c.toString();
         if(packet.contains("yfabric")){
             String packetName = packet.replace("yfabric:", "");
@@ -56,17 +69,15 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
         }
     }
 
-    public static void detach(Player player){
-        try{
-            EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-            PlayerConnection connection = entityPlayer.b;
+    public static class Builder{
+        private Player player;
 
-            Field field = connection.getClass().getField("h");
-            NetworkManager networkManager = (NetworkManager) field.get(connection);
-            ChannelPipeline pipeline = networkManager.m.pipeline();
-            pipeline.remove(NAME);
-        } catch (NoSuchFieldException | IllegalAccessException e){
-            e.printStackTrace();
-        } catch (NoSuchElementException ignored) {}
+        public Builder(Player player){
+            this.player = player;
+        }
+
+        public MessageOutboundHandler build(){
+            return new MessageOutboundHandler(player);
+        }
     }
 }

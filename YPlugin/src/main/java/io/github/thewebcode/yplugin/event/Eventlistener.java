@@ -10,6 +10,6 @@ public class Eventlistener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
-        MessageOutboundHandler.attach(player);
+        MessageOutboundHandler handler = new MessageOutboundHandler.Builder(player).build();
     }
 }
