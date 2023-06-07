@@ -16,7 +16,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"io.github.thewebcode.y.ExampleMod"
+			"io.github.thewebcode.y.YFabricMod"
+		],
+		"client": [
+			"io.github.thewebcode.y.YFabricModClient"
 		]
 	},
 	"mixins": [
