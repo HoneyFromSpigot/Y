@@ -7,12 +7,15 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-public class HelloC2SPacket implements DefaultPacket{
+public class HandshakeC2SPacket implements DefaultPacket{
+
     private PacketByteBuf buf;
 
-    public HelloC2SPacket(String playerName){
-        this.buf = PacketByteBufs.create();
-        buf.writeString(playerName);
+    public HandshakeC2SPacket(String player, String pass){
+        buf = PacketByteBufs.create();
+        buf.writeString(player);
+        buf.writeString("|");
+        buf.writeString(pass);
     }
 
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender){

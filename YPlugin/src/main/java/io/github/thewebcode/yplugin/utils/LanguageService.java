@@ -33,10 +33,12 @@ public class LanguageService {
     }
 
     public static String get(Language language, String key){
+        //TODO: Set default language
         return get().get(language.getPrefix() + "." + key);
     }
 
     public static String get(Language language, MessageKey key){
+        //TODO: Set default language
         return get(language, key.getKey());
     }
 
@@ -45,6 +47,7 @@ public class LanguageService {
     }
 
     public static enum Language{
+        DEFAULT("default"),
         DE("de"),
         EN("en");
 
@@ -61,6 +64,7 @@ public class LanguageService {
 
     public static enum MessageKey{
         HELLO("default.hello"),
+        COMMAND_PLAYER_ONLY("command.player_only"),
         PLUGIN_ENABLED("default.plugin_enabled"),
         PLUGIN_DISABLED("default.plugin_disabled");
         private String key;

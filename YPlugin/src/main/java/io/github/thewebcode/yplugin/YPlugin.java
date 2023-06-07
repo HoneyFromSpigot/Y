@@ -1,5 +1,6 @@
 package io.github.thewebcode.yplugin;
 
+import io.github.thewebcode.yplugin.command.YLoginCommand;
 import io.github.thewebcode.yplugin.event.Eventlistener;
 import io.github.thewebcode.yplugin.utils.FileService;
 import io.github.thewebcode.yplugin.utils.LanguageService;
@@ -22,6 +23,7 @@ public final class YPlugin extends JavaPlugin {
         this.fileService = new FileService();
         this.languageService = new LanguageService();
 
+        registerCommands();
         registerEvents();
 
         LoggingService.info(LanguageService.get(LanguageService.Language.EN, LanguageService.MessageKey.PLUGIN_ENABLED));
@@ -30,6 +32,10 @@ public final class YPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         this.loggingService.close();
+    }
+
+    private void registerCommands(){
+        getCommand("login").setExecutor(new YLoginCommand());
     }
 
     private void registerEvents(){

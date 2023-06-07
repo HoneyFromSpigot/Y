@@ -1,4 +1,6 @@
 de:
+  command:
+    player_only: "Dieser Befehl kann nur von einem Spieler ausgeführt werden!"
   error:
     no_permission: "Du hast keine Berechtigung dazu!"
   default:
@@ -6,6 +8,8 @@ de:
     plugin_enabled: "Plugin aktiviert"
     plugin_disabled: "Plugin deaktiviert"
 en:
+  command:
+    player_only: "This command can only be executed by a player!"
   error:
     no_permission: "You don't have the permission to do that!"
   default:
