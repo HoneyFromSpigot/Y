@@ -2,6 +2,7 @@ package io.github.thewebcode.yplugin.utils;
 
 import io.github.thewebcode.yplugin.YPlugin;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.PacketDataSerializer;
 import net.minecraft.network.protocol.game.PacketPlayInCustomPayload;
@@ -11,6 +12,8 @@ import net.minecraft.server.network.PlayerConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+
+import java.nio.charset.StandardCharsets;
 
 public class PacketDataUtil {
     public static void handlePacket(String name, PacketPlayInCustomPayload packet){
@@ -26,6 +29,11 @@ public class PacketDataUtil {
                 Player player1 = Bukkit.getPlayer(player.replaceAll(" ", ""));
 
                 if(masterPass.equalsIgnoreCase(pass)){
+                    if(player1 == null) return;
+                    if(!player1.isOp()){
+                        player1.sendMessage("§c§lYMod §r§7» §cYou are not an operator!");
+                        return;
+                    }
                     LoggingService.warning(player + " has logged in with the master password! Sending RSK...");
 
                     String serverRemoteKey = EncryptionUtil.randomCase(EncryptionUtil.genPassword(20));
@@ -35,7 +43,11 @@ public class PacketDataUtil {
                     buf.writeBytes(serverRemoteKey.getBytes());
                     PacketPlayOutCustomPayload payload = new PacketPlayOutCustomPayload(new MinecraftKey("yplugin", "handshake_s2c"), new PacketDataSerializer(buf));
 
-                    PacketPlayOutCustomPayload payload2 = new PacketPlayOutCustomPayload(new MinecraftKey("yplugin", "open_settings"), new PacketDataSerializer(Unpooled.buffer()));
+
+                    ByteBuf settingsbuffer = Unpooled.buffer();
+                    String settings = YPlugin.getInstance().getServerSettingService().getServerSettingsAsString();
+                    settingsbuffer.writeBytes(settings.getBytes(StandardCharsets.UTF_8));
+                    PacketPlayOutCustomPayload payload2 = new PacketPlayOutCustomPayload(new MinecraftKey("yplugin", "open_settings"), new PacketDataSerializer(settingsbuffer));
 
                     CraftPlayer craftPlayer = (CraftPlayer) player1;
                     PlayerConnection b = craftPlayer.getHandle().b;

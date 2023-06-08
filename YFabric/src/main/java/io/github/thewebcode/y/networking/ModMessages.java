@@ -4,6 +4,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.thewebcode.y.YFabricMod;
 import io.github.thewebcode.y.gui.LoginGuiDescription;
 import io.github.thewebcode.y.gui.LoginScreen;
+import io.github.thewebcode.y.gui.SettingsGuiDescription;
+import io.github.thewebcode.y.gui.SettingsScreen;
 import io.github.thewebcode.y.networking.packet.HandshakeC2SPacket;
 import io.github.thewebcode.y.networking.packet.HelloC2SPacket;
 import io.github.thewebcode.y.networking.packet.SettingUpdateC2SPacket;
@@ -16,7 +18,11 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ModMessages {
     public static final Identifier Y_FABRIC_HELLO = new Identifier("yfabric", "hello");
@@ -47,8 +53,35 @@ public class ModMessages {
         });
 
         ClientPlayNetworking.registerGlobalReceiver(OPEN_SETTINGS, (client, handler, buf, responseSender) -> {
+            int length = buf.readableBytes();
+            byte[] bytes = new byte[length];
+            buf.readBytes(bytes);
+            String settingsList = new String(bytes);
+
+            HashMap<String, String> settingsMap = new HashMap<>();
+
+            String[] settingsAsOne = settingsList.split("\\{");
+
+            ArrayList<String> settings = new ArrayList<>();
+            for (int i = 0; i < settingsAsOne.length; i++) {
+                settings.add(settingsAsOne[i]);
+            }
+
+            for (String setting : settings) {
+                String s = setting.replaceAll("\\}", "");
+                String[] split = s.split("\\|");
+
+                try{
+                    String name = split[0];
+                    String value = split[1];
+
+                    settingsMap.put(name, value);
+                } catch (Exception ignore){
+                }
+            }
+
             MinecraftClient.getInstance().execute(() -> {
-                //TODO: Open settings screen
+                MinecraftClient.getInstance().setScreen(new SettingsScreen(new SettingsGuiDescription(settingsMap)));
             });
         });
     }

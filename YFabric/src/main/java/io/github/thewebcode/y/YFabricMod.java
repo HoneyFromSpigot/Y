@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 public class YFabricMod implements ModInitializer {
 	private static YFabricMod instance;
+	public static final String MOD_ID = "yfabric";
     public static final Logger LOGGER = LoggerFactory.getLogger("yfabric");
 	public static String REMOTE_SERVER_KEY = "NONE";
 

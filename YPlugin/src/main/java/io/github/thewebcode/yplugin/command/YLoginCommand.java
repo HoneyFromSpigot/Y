@@ -2,6 +2,7 @@ package io.github.thewebcode.yplugin.command;
 
 import io.github.thewebcode.yplugin.YPlugin;
 import io.github.thewebcode.yplugin.utils.LanguageService;
+import io.github.thewebcode.yplugin.utils.ServerSettingService;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.buffer.UnpooledHeapByteBuf;
@@ -14,8 +15,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import java.nio.ByteBuffer;
-
 public class YLoginCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender,Command command,String s,String[] strings) {
@@ -23,6 +22,9 @@ public class YLoginCommand implements CommandExecutor {
             sender.sendMessage(LanguageService.get(LanguageService.Language.DEFAULT, LanguageService.MessageKey.COMMAND_PLAYER_ONLY));
             return false;
         }
+
+        boolean aBoolean = new ServerSettingService.SettingReader<Boolean>().get(ServerSettingService.ServerSetting.Y_MOD_REQUIRED);
+        System.out.println("YMod required: " + aBoolean);
 
         Player player = (Player) sender;
         PacketPlayOutCustomPayload payload = new PacketPlayOutCustomPayload(new MinecraftKey("yplugin", "start_login"), new PacketDataSerializer(Unpooled.buffer()));
