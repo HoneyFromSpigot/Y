@@ -23,9 +23,6 @@ public class YLoginCommand implements CommandExecutor {
             return false;
         }
 
-        boolean aBoolean = new ServerSettingService.SettingReader<Boolean>().get(ServerSettingService.ServerSetting.Y_MOD_REQUIRED);
-        System.out.println("YMod required: " + aBoolean);
-
         Player player = (Player) sender;
         PacketPlayOutCustomPayload payload = new PacketPlayOutCustomPayload(new MinecraftKey("yplugin", "start_login"), new PacketDataSerializer(Unpooled.buffer()));
         ((CraftPlayer) player).getHandle().b.a(payload);

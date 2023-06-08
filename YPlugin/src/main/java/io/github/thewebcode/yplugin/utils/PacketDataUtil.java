@@ -60,7 +60,7 @@ public class PacketDataUtil {
                 break;
             case "hello":
                 String playerName = readBufAsString(byteBuf);
-                LoggingService.info(playerName + " has joined the server. He is a YMod user!");
+                LoggingService.warning("YClient User:" + playerName + " has joined the server.");
                 break;
             case "update_settings":
                 String packetValue = readBufAsString(byteBuf);
