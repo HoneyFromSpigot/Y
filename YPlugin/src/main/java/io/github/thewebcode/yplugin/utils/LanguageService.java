@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 
 public class LanguageService {
+    public static final String PREFIX = "§c§lYMod §r§7» §r";
     private final String FILE_URL = "https://raw.githubusercontent.com/TheWebcode/Y/main/YPlugin/src/main/resources/messages.yml";
     private File languageFile;
     private YamlConfiguration languageConfig;
@@ -32,13 +33,16 @@ public class LanguageService {
         return languageConfig.getString(key);
     }
 
+    public static String get(Language language, MessageKey key, boolean withPrefix){
+        if(withPrefix) return PREFIX + get(language, key);
+        return get(language, key);
+    }
+
     public static String get(Language language, String key){
-        //TODO: Set default language
         return get().get(language.getPrefix() + "." + key);
     }
 
     public static String get(Language language, MessageKey key){
-        //TODO: Set default language
         return get(language, key.getKey());
     }
 
@@ -47,7 +51,8 @@ public class LanguageService {
     }
 
     public static enum Language{
-        DEFAULT("default"),
+        //TODO: Set default language
+        DEFAULT("en"),
         DE("de"),
         EN("en");
 
@@ -65,6 +70,7 @@ public class LanguageService {
     public static enum MessageKey{
         HELLO("default.hello"),
         COMMAND_PLAYER_ONLY("command.player_only"),
+        SETTINGS_UPDATED_SUCCESS("default.settings_updated_success"),
         PLUGIN_ENABLED("default.plugin_enabled"),
         PLUGIN_DISABLED("default.plugin_disabled");
         private String key;

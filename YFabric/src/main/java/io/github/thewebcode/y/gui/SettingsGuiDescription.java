@@ -8,11 +8,15 @@ import io.github.cottonmc.cotton.gui.widget.data.Texture;
 import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
 import io.github.thewebcode.y.YFabricMod;
 import io.github.thewebcode.y.gui.widget.YToggleButton;
+import io.github.thewebcode.y.networking.ModMessages;
+import io.github.thewebcode.y.networking.packet.SettingUpdateC2SPacket;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SettingsGuiDescription extends LightweightGuiDescription {
@@ -22,20 +26,6 @@ public class SettingsGuiDescription extends LightweightGuiDescription {
         rootPanel.setSize(300, 220);
         setTitleAlignment(HorizontalAlignment.CENTER);
 
-
-        settingsMap.put("test1", "true");
-        settingsMap.put("test2", "false");
-        settingsMap.put("test3", "true");
-        settingsMap.put("test4", "false");
-        settingsMap.put("test5", "true");
-        settingsMap.put("test6", "hello");
-        settingsMap.put("test7", "world");
-        settingsMap.put("test8", "1");
-        settingsMap.put("test9", "2");
-        settingsMap.put("test10", "3");
-        settingsMap.put("test11", "3.1");
-        settingsMap.put("test12", "3.2");
-
         WGridPanel tallPanel = new WGridPanel();
         tallPanel.setLocation(0, 0);
         tallPanel.setSize(500, settingsMap.size());
@@ -44,38 +34,40 @@ public class SettingsGuiDescription extends LightweightGuiDescription {
         scrollPanel.setScrollingHorizontally(TriState.FALSE);
         scrollPanel.setScrollingVertically(TriState.TRUE);
 
+        HashMap<String, WWidget> widgetMap = new HashMap<>();
+
         int keyYPos = 1;
         for (String key : settingsMap.keySet()) {
             WLabel label = new WLabel(Text.of(key));
             label.setVerticalAlignment(VerticalAlignment.BOTTOM);
             label.setHorizontalAlignment(HorizontalAlignment.LEFT);
             tallPanel.add(label, 0, keyYPos, 5, 1);
-            keyYPos++;
-        }
 
-        int valueYPos = 1;
-        for (String value : settingsMap.values()) {
+            String value = settingsMap.get(key);
+
             String dataType = getDataType(value);
 
             switch (dataType.toLowerCase()){
                 case "string":
                     WTextField textField = new WTextField();
                     textField.setText(value);
-                    tallPanel.add(textField, 8, valueYPos, 5, 1);
+                    tallPanel.add(textField, 8, keyYPos, 5, 1);
+                    widgetMap.put(key, textField);
                     break;
                 case "boolean":
                     YToggleButton toggleButton = new YToggleButton();
                     toggleButton.setToggle(value.equalsIgnoreCase("true"));
-                    tallPanel.add(toggleButton, 8, valueYPos, 5, 1);
+                    tallPanel.add(toggleButton, 8, keyYPos, 5, 1);
+                    widgetMap.put(key, toggleButton);
                     break;
                 case "double", "int":
                     WTextField tf = new WTextField();
                     tf.setText(value);
-                    tallPanel.add(tf, 8, valueYPos, 2, 1);
+                    tallPanel.add(tf, 8, keyYPos, 2, 1);
+                    widgetMap.put(key, tf);
                     break;
             }
-
-            valueYPos++;
+            keyYPos++;
         }
 
 
@@ -89,8 +81,37 @@ public class SettingsGuiDescription extends LightweightGuiDescription {
 
         WButton exit = new WButton(Text.of("Save & Exit"));
         exit.setOnClick(() -> {
+            HashMap<String, String> updatedSettingsMap = new HashMap<>();
+            widgetMap.keySet().forEach(key -> {
+                WWidget widget = widgetMap.get(key);
+                if(widget instanceof WTextField){
+                    WTextField textfiled = (WTextField) widget;
+                    String text = textfiled.getText();
+                    updatedSettingsMap.put(key, text);
+                } else if(widget instanceof YToggleButton){
+                    YToggleButton toggleButton = (YToggleButton) widget;
+                    String toggle = toggleButton.getToggle() ? "true" : "false";
+                    updatedSettingsMap.put(key, toggle);
+                }
+            });
+
             MinecraftClient.getInstance().currentScreen.close();
-            //TODO: Save settings
+            MinecraftClient.getInstance().execute(() -> {
+                StringBuilder sb = new StringBuilder();
+                String RSK = YFabricMod.REMOTE_SERVER_KEY;
+                sb.append("\\{" + MinecraftClient.getInstance().player.getName().getString() + "}");
+                sb.append("\\{" + RSK + "}");
+
+                updatedSettingsMap.keySet().forEach(key -> {
+                    String settingPart = "{" + key + "|" + updatedSettingsMap.get(key) + "}";
+                    sb.append(settingPart);
+                });
+
+                String fullSettings = sb.toString();
+
+                System.out.println("Sending settings: " + fullSettings);
+                ClientPlayNetworking.send(ModMessages.UPDATE_SETTINGS, new SettingUpdateC2SPacket(fullSettings).value());
+            });
         });
         panel.add(exit, 10, 10, 6, 1);
 
@@ -99,6 +120,15 @@ public class SettingsGuiDescription extends LightweightGuiDescription {
         cancel.setOnClick(() -> {
             MinecraftClient.getInstance().currentScreen.close();
         });
+    }
+    
+    private static String getKeyByValue(String value, HashMap<String, String> settingsmap){
+        for (String key : settingsmap.keySet()) {
+            if (settingsmap.get(key).equals(value)) {
+                return key;
+            }
+        }
+        return null;
     }
 
     private static String getDataType(String s){

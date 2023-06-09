@@ -45,6 +45,14 @@ public class ServerSettingService {
         return settingsFile;
     }
 
+    public static class SettingWriter<T> {
+        public void write(ServerSetting setting, T value){
+            YamlConfiguration settings1 = YPlugin.getInstance().getServerSettingService().getSettings();
+            settings1.set(setting.getKey(), value);
+            FileService.get().save(settings1, YPlugin.getInstance().getServerSettingService().getSettingsFile());
+        }
+    }
+
     public static class SettingReader<T>{
         public T get(ServerSetting setting){
             String key = setting.getKey();
@@ -64,7 +72,7 @@ public class ServerSettingService {
 
     public static enum ServerSetting{
         Y_MOD_REQUIRED("Y Mod Required", "y_mod_required", true),
-        TEST("Test", "test", "1");
+        TEST("Test", "test", "hello world!");
 
         private String name;
         private String key;

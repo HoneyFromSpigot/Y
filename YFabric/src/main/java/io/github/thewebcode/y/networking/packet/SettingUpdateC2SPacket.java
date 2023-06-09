@@ -10,11 +10,9 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class SettingUpdateC2SPacket implements DefaultPacket{
     private PacketByteBuf buf;
 
-    public SettingUpdateC2SPacket(String setting, String value){
+    public SettingUpdateC2SPacket(String settings){
         this.buf = PacketByteBufs.create();
-        buf.writeString(setting);
-        buf.writeString("|");
-        buf.writeString(value);
+        buf.writeString(settings);
     }
 
 
