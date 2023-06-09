@@ -4,6 +4,7 @@ de:
   error:
     no_permission: "Du hast keine Berechtigung dazu!"
   default:
+    settings_updated_success: "§aEinstellungen erfolgreich aktualisiert!"
     hello: "Hallo"
     plugin_enabled: "Plugin aktiviert"
     plugin_disabled: "Plugin deaktiviert"
@@ -13,6 +14,7 @@ en:
   error:
     no_permission: "You don't have the permission to do that!"
   default:
+    settings_updated_success: "§aSettings successfully updated!"
     hello: "Hello"
     plugin_enabled: "Plugin enabled"
     plugin_disabled: "Plugin disabled"
