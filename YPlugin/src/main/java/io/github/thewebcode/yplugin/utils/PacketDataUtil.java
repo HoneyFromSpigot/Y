@@ -2,7 +2,6 @@ package io.github.thewebcode.yplugin.utils;
 
 import io.github.thewebcode.yplugin.YPlugin;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.PacketDataSerializer;
 import net.minecraft.network.protocol.game.PacketPlayInCustomPayload;
