@@ -24,6 +24,7 @@ public class FileService{
 
                 String pw = EncryptionUtil.genPassword(7);
                 config.set("master-password", pw);
+                config.set("language", "de");
                 config.save(configFile);
             }
         } catch(Exception e){

@@ -39,6 +39,12 @@ public class LanguageService {
     }
 
     public static String get(Language language, String key){
+
+        if(language == Language.DEFAULT) {
+            String lang = FileService.get().getConfig().isSet("language") ? FileService.get().getConfig().getString("language") : "en";
+            return get().get(lang + "." + key);
+        }
+
         return get().get(language.getPrefix() + "." + key);
     }
 
