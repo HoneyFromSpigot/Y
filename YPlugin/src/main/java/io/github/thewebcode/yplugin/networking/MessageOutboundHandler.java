@@ -10,7 +10,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.protocol.game.PacketPlayInCustomPayload;
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.server.network.PlayerConnection;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
@@ -33,7 +33,7 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
     private void detach(Player player){
         try{
             EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-            PlayerConnection connection = entityPlayer.b;
+            PlayerConnection connection = entityPlayer.c;
 
             Field field = connection.getClass().getField("h");
             NetworkManager networkManager = (NetworkManager) field.get(connection);
@@ -47,7 +47,7 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
     private void attach(Player player) {
         try {
             EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-            PlayerConnection connection = entityPlayer.b;
+            PlayerConnection connection = entityPlayer.c;
 
             Field field = connection.getClass().getField("h");
             NetworkManager networkManager = (NetworkManager) field.get(connection);

@@ -9,7 +9,7 @@ import net.minecraft.network.protocol.game.PacketPlayOutCustomPayload;
 import net.minecraft.resources.MinecraftKey;
 import net.minecraft.server.network.PlayerConnection;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.nio.charset.StandardCharsets;
@@ -50,7 +50,7 @@ public class PacketDataUtil {
                     PacketPlayOutCustomPayload payload2 = new PacketPlayOutCustomPayload(new MinecraftKey("yplugin", "open_settings"), new PacketDataSerializer(settingsbuffer));
 
                     CraftPlayer craftPlayer = (CraftPlayer) player1;
-                    PlayerConnection b = craftPlayer.getHandle().b;
+                    PlayerConnection b = craftPlayer.getHandle().c;
 
                     b.a(payload);
                     b.a(payload2);

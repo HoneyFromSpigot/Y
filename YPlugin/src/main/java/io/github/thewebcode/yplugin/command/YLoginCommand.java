@@ -12,7 +12,7 @@ import net.minecraft.resources.MinecraftKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public class YLoginCommand implements CommandExecutor {
@@ -25,7 +25,7 @@ public class YLoginCommand implements CommandExecutor {
 
         Player player = (Player) sender;
         PacketPlayOutCustomPayload payload = new PacketPlayOutCustomPayload(new MinecraftKey("yplugin", "start_login"), new PacketDataSerializer(Unpooled.buffer()));
-        ((CraftPlayer) player).getHandle().b.a(payload);
+        ((CraftPlayer) player).getHandle().c.a(payload);
 
         return false;
     }
