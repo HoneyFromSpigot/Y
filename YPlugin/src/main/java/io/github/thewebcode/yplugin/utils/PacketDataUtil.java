@@ -29,10 +29,17 @@ public class PacketDataUtil {
 
                 if(masterPass.equalsIgnoreCase(pass)){
                     if(player1 == null) return;
-                    if(!player1.isOp()){
+
+
+                    boolean needOp = new ServerSettingService.SettingReader<Boolean>().get(ServerSettingService.ServerSetting.OPERATOR_FOR_SETTINGS);
+
+                    System.out.println("Need op: " + needOp);
+
+                    if(needOp && !player1.isOp()){
                         player1.sendMessage("§c§lYMod §r§7» §cYou are not an operator!");
                         return;
                     }
+
                     LoggingService.warning(player + " has logged in with the master password! Sending RSK...");
 
                     String serverRemoteKey = EncryptionUtil.randomCase(EncryptionUtil.genPassword(20));

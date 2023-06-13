@@ -4,6 +4,8 @@ import io.github.thewebcode.yplugin.YPlugin;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 public class ServerSettingService {
     private File settingsFile;
@@ -32,7 +34,7 @@ public class ServerSettingService {
     }
 
     public String getServerSettingAsString(ServerSetting setting){
-        Object value = new SettingReader<Object>().get(setting);
+        Object value = new SettingReader<String>().get(setting);
         String settingName = setting.getName();
         return  "{" + settingName + "|" + value + "}";
     }
@@ -46,9 +48,10 @@ public class ServerSettingService {
     }
 
     public static class SettingWriter<T> {
-        public void write(ServerSetting setting, T value){
+        public void write(ServerSetting setting, Object value){
             YamlConfiguration settings1 = YPlugin.getInstance().getServerSettingService().getSettings();
             settings1.set(setting.getKey(), value);
+            System.out.println("Wrote " + setting.getKey() + " to " + value);
             FileService.get().save(settings1, YPlugin.getInstance().getServerSettingService().getSettingsFile());
         }
     }
@@ -58,19 +61,51 @@ public class ServerSettingService {
             String key = setting.getKey();
 
             YamlConfiguration settings1 = YPlugin.getInstance().getServerSettingService().getSettings();
+
             if(!settings1.contains(key)) {
-                settings1.set(key, setting.getDefaultValue());
-                FileService.get().save(settings1, YPlugin.getInstance().getServerSettingService().getSettingsFile());
+                LoggingService.severe("Config did not contain " + key + "! Setting to default value!");
+                new ServerSettingService.SettingWriter<String>().write(ServerSetting.OPERATOR_FOR_SETTINGS, ServerSetting.OPERATOR_FOR_SETTINGS.getDefaultValue());
                 return (T) setting.getDefaultValue();
             }
 
             Object o = settings1.get(key);
-            if(o == null) return (T) setting.getDefaultValue();
-            return (T) o;
+
+            try {
+                Class<?> clazzOfT = setting.getDefaultValue().getClass();
+
+                System.out.println("Class of T: " + clazzOfT.getSimpleName().toLowerCase());
+                switch (clazzOfT.getSimpleName().toLowerCase()) {
+                    case "boolean":
+                        return (T) Boolean.valueOf(o.toString());
+                    case "string":
+                        return (T) o.toString();
+                    case "integer":
+                        return (T) Integer.valueOf(o.toString());
+                    case "double":
+                        return (T) Double.valueOf(o.toString());
+                    case "float":
+                        return (T) Float.valueOf(o.toString());
+                    case "long":
+                        return (T) Long.valueOf(o.toString());
+                    case "short":
+                        return (T) Short.valueOf(o.toString());
+                    case "byte":
+                        return (T) Byte.valueOf(o.toString());
+                    case "character":
+                        return (T) Character.valueOf(o.toString().charAt(0));
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + clazzOfT.getSimpleName().toLowerCase());
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+            return null;
         }
     }
 
     public static enum ServerSetting{
+        OPERATOR_FOR_SETTINGS("Operator for Settings", "operator_for_settings", true),
         Y_MOD_REQUIRED("Y Mod Required", "y_mod_required", true),
         TEST("Test", "test", "hello world!");
 
