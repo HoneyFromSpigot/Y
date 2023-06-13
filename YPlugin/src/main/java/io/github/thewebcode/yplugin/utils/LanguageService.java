@@ -52,6 +52,14 @@ public class LanguageService {
         return get(language, key.getKey());
     }
 
+    public static String get(MessageKey messageKey){
+        return get(Language.DEFAULT, messageKey);
+    }
+
+    public static String get(MessageKey messageKey, boolean withPrefix){
+        return get(Language.DEFAULT, messageKey, withPrefix);
+    }
+
     public static LanguageService get(){
         return YPlugin.getInstance().getLanguageService();
     }
