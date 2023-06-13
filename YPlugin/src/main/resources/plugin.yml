@@ -1,5 +1,6 @@
 name: YPlugin
-version: '${project.version}'
+version: '1.1.0'
+author: TheWebcode
 main: io.github.thewebcode.yplugin.YPlugin
 api-version: 1.19
 commands:
