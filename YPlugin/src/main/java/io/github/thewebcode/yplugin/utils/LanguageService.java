@@ -57,7 +57,6 @@ public class LanguageService {
     }
 
     public static enum Language{
-        //TODO: Set default language
         DEFAULT("en"),
         DE("de"),
         EN("en");
@@ -75,6 +74,7 @@ public class LanguageService {
 
     public static enum MessageKey{
         HELLO("default.hello"),
+        ERROR_NO_VALID_RSK("error.no_valid_rsk"),
         COMMAND_PLAYER_ONLY("command.player_only"),
         SETTINGS_UPDATED_SUCCESS("default.settings_updated_success"),
         PLUGIN_ENABLED("default.plugin_enabled"),
