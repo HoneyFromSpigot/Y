@@ -1,5 +1,6 @@
 package io.github.thewebcode.yplugin;
 
+import io.github.thewebcode.yplugin.command.SettingsCommand;
 import io.github.thewebcode.yplugin.command.YLoginCommand;
 import io.github.thewebcode.yplugin.event.Eventlistener;
 import io.github.thewebcode.yplugin.utils.*;
@@ -37,6 +38,7 @@ public final class YPlugin extends JavaPlugin {
     }
 
     private void registerCommands(){
+        getCommand("settings").setExecutor(new SettingsCommand());
         getCommand("login").setExecutor(new YLoginCommand());
     }
 

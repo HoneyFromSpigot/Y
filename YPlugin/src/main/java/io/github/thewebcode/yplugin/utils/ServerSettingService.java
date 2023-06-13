@@ -1,11 +1,19 @@
 package io.github.thewebcode.yplugin.utils;
 
 import io.github.thewebcode.yplugin.YPlugin;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import net.minecraft.network.PacketDataSerializer;
+import net.minecraft.network.protocol.game.PacketPlayOutCustomPayload;
+import net.minecraft.resources.MinecraftKey;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 
 public class ServerSettingService {
     private File settingsFile;
@@ -21,6 +29,16 @@ public class ServerSettingService {
         }
 
         settings = YamlConfiguration.loadConfiguration(settingsFile);
+    }
+
+    public void openSettings(Player player){
+        ByteBuf settingsbuffer = Unpooled.buffer();
+        String settings = YPlugin.getInstance().getServerSettingService().getServerSettingsAsString();
+        settingsbuffer.writeBytes(settings.getBytes(StandardCharsets.UTF_8));
+        PacketPlayOutCustomPayload payload = new PacketPlayOutCustomPayload(new MinecraftKey("yplugin", "open_settings"), new PacketDataSerializer(settingsbuffer));
+
+        CraftPlayer craftPlayer = (CraftPlayer) player;
+        craftPlayer.getHandle().c.a(payload);
     }
 
     public String getServerSettingsAsString(){
@@ -45,6 +63,10 @@ public class ServerSettingService {
 
     public File getSettingsFile() {
         return settingsFile;
+    }
+
+    public static ServerSettingService get(){
+        return YPlugin.getInstance().getServerSettingService();
     }
 
     public static class SettingWriter<T> {

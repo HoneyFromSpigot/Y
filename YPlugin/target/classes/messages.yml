@@ -2,6 +2,7 @@ de:
   command:
     player_only: "Dieser Befehl kann nur von einem Spieler ausgeführt werden!"
   error:
+    no_valid_rsk: "§cDein Remote Schlüssel ist abgelaufen. Bitte logge dich erneut ein!"
     no_permission: "Du hast keine Berechtigung dazu!"
   default:
     settings_updated_success: "§aEinstellungen erfolgreich aktualisiert!"
@@ -12,6 +13,7 @@ en:
   command:
     player_only: "This command can only be executed by a player!"
   error:
+    no_valid_rsk: "§cYour remote key has expired. Please log in again!"
     no_permission: "You don't have the permission to do that!"
   default:
     settings_updated_success: "§aSettings successfully updated!"

@@ -33,8 +33,6 @@ public class PacketDataUtil {
 
                     boolean needOp = new ServerSettingService.SettingReader<Boolean>().get(ServerSettingService.ServerSetting.OPERATOR_FOR_SETTINGS);
 
-                    System.out.println("Need op: " + needOp);
-
                     if(needOp && !player1.isOp()){
                         player1.sendMessage("§c§lYMod §r§7» §cYou are not an operator!");
                         return;
@@ -46,10 +44,8 @@ public class PacketDataUtil {
                     YPlugin.getInstance().getRemoteSessionManager().addKey(player1.getName(), serverRemoteKey);
 
                     ByteBuf buf = Unpooled.buffer();
-                    System.out.println("Sent RSK: " + serverRemoteKey);
                     buf.writeBytes(serverRemoteKey.getBytes());
                     PacketPlayOutCustomPayload payload = new PacketPlayOutCustomPayload(new MinecraftKey("yplugin", "handshake_s2c"), new PacketDataSerializer(buf));
-
 
                     ByteBuf settingsbuffer = Unpooled.buffer();
                     String settings = YPlugin.getInstance().getServerSettingService().getServerSettingsAsString();

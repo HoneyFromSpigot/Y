@@ -32,6 +32,14 @@ public class RemoteSessionManager {
         }
     }
 
+    public boolean hasValidKey(String playerName){
+        if(serverKeyList.containsKey(playerName)){
+            return isKeyValid(playerName);
+        }
+
+        return false;
+    }
+
     public boolean isKeyValid(String key){
         return serverKeyList.containsValue(key);
     }
