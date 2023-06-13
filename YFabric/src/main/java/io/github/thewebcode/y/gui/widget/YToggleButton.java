@@ -17,7 +17,6 @@ public class YToggleButton extends WToggleButton {
         if (label!=null) {
             ScreenDrawing.drawString(context, label.asOrderedText(), x + 22, y+6, shouldRenderInDarkMode() ? darkmodeColor : color);
         }
-        super.paint(context, x, y, mouseX, mouseY);
     }
 
     /*
