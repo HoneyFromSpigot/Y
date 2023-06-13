@@ -68,14 +68,9 @@ public class PacketDataUtil {
             case "update_settings":
                 String packetValue = readBufAsString(byteBuf);
 
-                System.out.println("Packet Value: " + packetValue);
                 String[] split = packetValue.split("}");
                 String playerName1 = split[0].substring(1).replaceAll("\\W", "");
                 String rsk = split[1].replaceAll("\\W", "");
-
-                System.out.println("Player: " + playerName1);
-                System.out.println("RSK: " + rsk);
-
 
                 Player sendingPlayer = Bukkit.getPlayer(playerName1);
 
@@ -84,7 +79,7 @@ public class PacketDataUtil {
                     return;
                 }
 
-                boolean keyValid = YPlugin.getInstance().getRemoteSessionManager().isKeyValid(rsk);
+                boolean keyValid = YPlugin.getInstance().getRemoteSessionManager().isKeyValid(sendingPlayer.getName(), rsk);
 
                 if(!keyValid){
                     sendingPlayer.sendMessage("§c§lYMod §r§7» §cYour RSK is invalid! Please login to the Settings Panel again!");
@@ -93,7 +88,6 @@ public class PacketDataUtil {
 
                 for (int i = 2; i < split.length; i++) {
                     String settings = split[i].replaceAll("\\{", "");
-                    System.out.println("Settings: " + settings);
 
                     String[] settingSplit = settings.split("\\|");
                     String settingName = settingSplit[0].replaceAll("[^a-zA-Z0-9\\s]", "");

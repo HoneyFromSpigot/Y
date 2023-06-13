@@ -25,6 +25,7 @@ public class SettingsCommand implements CommandExecutor {
 
         if(validKey){
             ServerSettingService.get().openSettings(player);
+            return true;
         }
 
         player.sendMessage(LanguageService.get(LanguageService.MessageKey.ERROR_NO_VALID_RSK, true));

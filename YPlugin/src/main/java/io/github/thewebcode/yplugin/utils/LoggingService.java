@@ -20,11 +20,9 @@ public class LoggingService {
             File FOLDER = new File("./plugins/y/logs");
 
             if(FOLDER.exists()){
-                System.out.println("Cleaning Folder!");
                 FileUtils.deleteDirectory(FOLDER);
             }
 
-            System.out.println("Making Folder");
             FOLDER.mkdirs();
 
             File logFile = new File(FOLDER, "log.txt");

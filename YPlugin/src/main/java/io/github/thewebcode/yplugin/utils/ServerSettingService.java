@@ -73,7 +73,6 @@ public class ServerSettingService {
         public void write(ServerSetting setting, Object value){
             YamlConfiguration settings1 = YPlugin.getInstance().getServerSettingService().getSettings();
             settings1.set(setting.getKey(), value);
-            System.out.println("Wrote " + setting.getKey() + " to " + value);
             FileService.get().save(settings1, YPlugin.getInstance().getServerSettingService().getSettingsFile());
         }
     }
@@ -95,7 +94,6 @@ public class ServerSettingService {
             try {
                 Class<?> clazzOfT = setting.getDefaultValue().getClass();
 
-                System.out.println("Class of T: " + clazzOfT.getSimpleName().toLowerCase());
                 switch (clazzOfT.getSimpleName().toLowerCase()) {
                     case "boolean":
                         return (T) Boolean.valueOf(o.toString());
