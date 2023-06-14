@@ -24,6 +24,24 @@ The Y Mod also introduces additional features such as KeyPressEvents (for develo
 |       Chat Message API        |      ❌      |
 |           Title API           |      ❌      |
 | Remote Y Settings for Servers |      ✅      |
+|           Utilities           |      ❌      |
+|       Player Management       |      ❌      |
+|        Item Management        |      ❌      |
+|       Block Management        |      ❌      |
+|        Chat Management        |      ❌      |
+|          Effects API          |      ❌      |
+|       Entity Management       |      ❌      |
+|     Inventory Management      |      ❌      |
+|        Reflection API         |      ❌      |
+|          SQL Library          |      ❌      |
+|       Threading Library       |      ❌      |
+|          Warp System          |      ❌      |
+|   World & Chunk Management    |      ❌      |
+|       Easy YML Wrapper        |      ❌      |
+|      Developer Commands       |      ❌      |
+
+Most of these features are still under development. However, it's worth checking back every now and then to try out the latest utils!
+
 
 ## Wiki
 
