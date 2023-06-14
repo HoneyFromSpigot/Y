@@ -7,12 +7,17 @@ However, the YProject is not merely a collection of libraries; it goes beyond th
 It is a mod that adds additional features to the server. While it is not mandatory for players to install this mod, it does bring several benefits (the requirement of the mod can be adjusted in the server settings). 
 With the Y Mod installed, players have the ability to log into the server settings using "/login" and their corresponding password (configurable in the server configuration). 
 The Y Mod also introduces additional features such as KeyPressEvents (for developers) and custom GUIs.
+## Versions
+
+| Minecraft Version | Y Plugin Compatible | Y Mod Forge | Y Mod Fabric |
+|:-----------------:|:-------------------:|:-----------:|:------------:|
+|      1.20.1       |          ✅          |      ❌      |      ✅       |
 
 ## Features
 
 |            Feature            | Implemented |
 |:-----------------------------:|:-----------:|
-|            Gui API            |      ✅       |
+|            Gui API            |      ✅      |
 |      Y Mod - Custom Guis      |      ❌      |
 |   Annotation Command System   |      ❌      |
 |         Firework API          |      ❌      |
