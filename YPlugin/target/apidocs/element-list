@@ -1,0 +1,14 @@
+io.github.thewebcode.yplugin
+io.github.thewebcode.yplugin.command
+io.github.thewebcode.yplugin.event
+io.github.thewebcode.yplugin.gui
+io.github.thewebcode.yplugin.gui.builder.gui
+io.github.thewebcode.yplugin.gui.builder.item
+io.github.thewebcode.yplugin.gui.components
+io.github.thewebcode.yplugin.gui.components.exception
+io.github.thewebcode.yplugin.gui.components.nbt
+io.github.thewebcode.yplugin.gui.components.util
+io.github.thewebcode.yplugin.menu
+io.github.thewebcode.yplugin.networking
+io.github.thewebcode.yplugin.nms
+io.github.thewebcode.yplugin.utils
