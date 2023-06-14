@@ -14,23 +14,8 @@ public class YToggleButton extends WToggleButton {
             ScreenDrawing.texturedRect(context, x, y, 18, 24, focusImage, 0xFFFFFFFF);
         }
 
-        if (label!=null) {
-            ScreenDrawing.drawString(context, label.asOrderedText(), x + 22, y+6, shouldRenderInDarkMode() ? darkmodeColor : color);
+        if (label != null) {
+            ScreenDrawing.drawString(context, label.asOrderedText(), x + 22, y + 6, shouldRenderInDarkMode() ? darkmodeColor : color);
         }
     }
-
-    /*
-    @Deprecated
-    public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
-        ScreenDrawing.texturedRect(matrices, x, y, 18, 29, isOn ? onImage : offImage, 0xFFFFFFFF);
-        if (isFocused()) {
-            ScreenDrawing.texturedRect(matrices, x, y, 18, 24, focusImage, 0xFFFFFFFF);
-        }
-
-        if (label!=null) {
-            ScreenDrawing.drawString(matrices, label.asOrderedText(), x + 22, y+6, shouldRenderInDarkMode() ? darkmodeColor : color);
-        }
-    }
-
-     */
 }

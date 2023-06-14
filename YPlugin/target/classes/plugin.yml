@@ -4,6 +4,7 @@ author: TheWebcode
 main: io.github.thewebcode.yplugin.YPlugin
 api-version: 1.19
 commands:
+  test:
   settings:
     aliases: [ysettings, ys]
   login:
