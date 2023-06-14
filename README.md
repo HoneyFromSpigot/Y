@@ -24,3 +24,7 @@ The Y Mod also introduces additional features such as KeyPressEvents (for develo
 |       Chat Message API        |      ❌      |
 |           Title API           |      ❌      |
 | Remote Y Settings for Servers |      ✅      |
+
+## Wiki
+
+The wiki can be found [here](https://github.com/TheWebcode/Y/wiki).
