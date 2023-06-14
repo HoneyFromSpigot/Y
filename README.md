@@ -28,3 +28,20 @@ The Y Mod also introduces additional features such as KeyPressEvents (for develo
 ## Wiki
 
 The wiki can be found [here](https://github.com/TheWebcode/Y/wiki).
+
+## Contributing
+
+We welcome contributions to the YProject from the developer community. If you're interested in contributing, please follow the guidelines below:
+
+1. Fork the repository and clone it to your local machine.
+2. Create a new branch for your feature or bug fix.
+3. Implement your changes and ensure that they adhere to the project's coding standards.
+4. Commit your changes and push them to your forked repository.
+5. Submit a pull request with a detailed description of your changes, including the problem you addressed and the proposed solution.
+6. Please note that all contributors are expected to follow our Code of Conduct during their participation in the project.
+
+We appreciate your contributions and will review your pull requests as soon as possible. Thank you for helping to improve the YProject!
+
+
+## Developers
+- TheWebcode
