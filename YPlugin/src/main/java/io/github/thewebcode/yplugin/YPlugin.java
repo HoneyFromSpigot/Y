@@ -9,6 +9,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class YPlugin extends JavaPlugin {
+    public static String SERVER_VERSION = "";
     private static YPlugin instance;
 
     private FileService fileService;
@@ -21,6 +22,9 @@ public final class YPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         this.loggingService = new LoggingService();
+
+        registerNMS();
+
         this.fileService = new FileService();
         this.languageService = new LanguageService();
         this.remoteSessionManager = new RemoteSessionManager();
@@ -35,6 +39,13 @@ public final class YPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         this.loggingService.close();
+    }
+
+    private void registerNMS(){
+        String packageName = Bukkit.getServer().getClass().getPackage().getName();
+        SERVER_VERSION = packageName.split("\\.")[3];
+
+        LoggingService.info("Starting up on Server version: " + SERVER_VERSION);
     }
 
     private void registerCommands(){
