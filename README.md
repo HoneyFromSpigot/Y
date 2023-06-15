@@ -32,6 +32,7 @@ The Y Mod also introduces additional features such as KeyPressEvents (for develo
 |          Effects API          |      ❌      |
 |       Entity Management       |      ❌      |
 |     Inventory Management      |      ❌      |
+|           Utilities           |      ✅      |
 |        Reflection API         |      ❌      |
 |          SQL Library          |      ❌      |
 |       Threading Library       |      ❌      |
