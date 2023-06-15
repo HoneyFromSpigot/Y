@@ -24,7 +24,6 @@ The Y Mod also introduces additional features such as KeyPressEvents (for develo
 |       Chat Message API        |      ❌      |
 |           Title API           |      ❌      |
 | Remote Y Settings for Servers |      ✅      |
-|           Utilities           |      ❌      |
 |       Player Management       |      ❌      |
 |        Item Management        |      ❌      |
 |       Block Management        |      ❌      |
