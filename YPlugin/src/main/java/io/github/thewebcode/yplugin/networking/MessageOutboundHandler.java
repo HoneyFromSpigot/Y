@@ -1,7 +1,5 @@
 package io.github.thewebcode.yplugin.networking;
 
-import io.github.thewebcode.yplugin.utils.PacketDataUtil;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
@@ -67,10 +65,8 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
 
     private void read(PacketPlayInCustomPayload payload){
         String packet = payload.c.toString();
-        if(packet.contains("yfabric")){
+        if(packet.contains("yfabric")) {
             String packetName = packet.replace("yfabric:", "");
-
-            PacketDataUtil.handlePacket(packetName, payload);
         }
     }
 

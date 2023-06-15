@@ -5,58 +5,58 @@ import org.bukkit.event.*;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public abstract class LoggedPluginManager implements PluginManager {
+
     private PluginManager delegate;
 
-    public LoggedPluginManager(Plugin owner){
+    public LoggedPluginManager(Plugin owner) {
         this(owner.getServer().getPluginManager());
     }
 
-    public LoggedPluginManager(PluginManager delegate){
+    public LoggedPluginManager(PluginManager delegate) {
         this.delegate = delegate;
+
     }
 
     protected abstract void customHandler(Event event, Throwable e);
 
-    public void registerEvents(Listener listener, Plugin plugin){
-        if(!plugin.isEnabled()){
+    public void registerEvents(Listener listener, Plugin plugin) {
+        if (!plugin.isEnabled())
             throw new IllegalPluginAccessException("Plugin attempted to register " + listener + " while not enabled");
-        }
-
         EventExecutor nullExecutor = new EventExecutor() {
             @Override
-            public void execute(@NotNull Listener listener, @NotNull Event event) throws EventException {
-                throw new IllegalStateException("This method should never be called");
+            public void execute(Listener arg0, Event arg1) throws EventException {
+                throw new IllegalStateException("This method should never be called!");
             }
         };
 
-        for(Map.Entry<Class<? extends Event>, Set<RegisteredListener>> entry : plugin.getPluginLoader().createRegisteredListeners(listener, plugin).entrySet()){
+        for (Entry<Class<? extends Event>, Set<RegisteredListener>> entry : plugin
+                .getPluginLoader().createRegisteredListeners(listener, plugin)
+                .entrySet()) {
+
             Collection<RegisteredListener> listeners = entry.getValue();
             Collection<RegisteredListener> modified = Lists.newArrayList();
-
-            for(Iterator<RegisteredListener> it = listeners.iterator(); it.hasNext();){
+            for (Iterator<RegisteredListener> it = listeners.iterator(); it.hasNext(); ) {
                 final RegisteredListener delegate = it.next();
 
                 RegisteredListener customListener = new RegisteredListener(
-                        delegate.getListener(), nullExecutor, delegate.getPriority(), delegate.getPlugin(), delegate.isIgnoringCancelled()
-                ){
+                        delegate.getListener(), nullExecutor, delegate.getPriority(),
+                        delegate.getPlugin(), delegate.isIgnoringCancelled()) {
                     @Override
-                    public void callEvent(@NotNull Event event) throws EventException {
-                        try{
+                    public void callEvent(Event event) throws EventException {
+                        try {
                             delegate.callEvent(event);
-                        } catch (AuthorNagException e){
+                        } catch (AuthorNagException e) {
                             throw e;
-                        } catch (Throwable e){
+                        } catch (Throwable e) {
                             customHandler(event, e);
                         }
                     }
@@ -69,50 +69,61 @@ public abstract class LoggedPluginManager implements PluginManager {
         }
     }
 
-    private EventExecutor getWrappedExecutor(final EventExecutor executor){
+    private EventExecutor getWrappedExecutor(final EventExecutor executor) {
         return new EventExecutor() {
             @Override
-            public void execute(@NotNull Listener listener, @NotNull Event event) throws EventException {
-                try{
+            public void execute(Listener listener, Event event) throws EventException {
+                try {
                     executor.execute(listener, event);
-                } catch (AuthorNagException e){
+                } catch (AuthorNagException e) {
                     throw e;
-                } catch (Throwable e){
+                } catch (Throwable e) {
                     customHandler(event, e);
                 }
             }
         };
     }
 
-    private HandlerList getEventListeners(Class<? extends Event> type){
-        try{
+    private HandlerList getEventListeners(Class<? extends Event> type) {
+        try {
             Method method = getRegistrationClass(type).getDeclaredMethod("getHandlerList", new Class[0]);
             method.setAccessible(true);
             return (HandlerList) method.invoke(null, new Object[0]);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new IllegalPluginAccessException(e.toString());
         }
     }
 
-    private Class<? extends Event> getRegistrationClass(Class<? extends Event> clazz){
-        try{
+    private Class<? extends Event> getRegistrationClass(Class<? extends Event> clazz) {
+        try {
             clazz.getDeclaredMethod("getHandlerList", new Class[0]);
-        } catch (NoSuchMethodException e){
-            if(clazz.getSuperclass() != null && (!clazz.getSuperclass().equals(Event.class)) && Event.class.isAssignableFrom(clazz.getSuperclass())){
-                return getRegistrationClass(clazz.getSuperclass().asSubclass(Event.class));
+            return clazz;
+
+        } catch (NoSuchMethodException e) {
+            if ((clazz.getSuperclass() != null)
+                    && (!clazz.getSuperclass().equals(Event.class))
+                    && (Event.class.isAssignableFrom(clazz.getSuperclass()))) {
+                return getRegistrationClass(clazz.getSuperclass().asSubclass(
+                        Event.class));
             }
         }
-        throw new IllegalPluginAccessException("Unable to find handler list for event " + clazz.getName());
+        throw new IllegalPluginAccessException("Unable to find static getHandlerList method for event " + clazz.getName());
     }
 
     @Override
-    public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority eventPriority, EventExecutor eventExecutor, Plugin plugin) {
-        delegate.registerEvent(event, listener, eventPriority, getWrappedExecutor(eventExecutor), plugin);
+    public void registerEvent(
+            Class<? extends Event> event, Listener listener, EventPriority priority,
+            EventExecutor executor, Plugin plugin) {
+
+        delegate.registerEvent(event, listener, priority, getWrappedExecutor(executor), plugin);
     }
 
     @Override
-    public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority eventPriority, EventExecutor eventExecutor, Plugin plugin, boolean ignoreCancel) {
-        delegate.registerEvent(event, listener, eventPriority, getWrappedExecutor(eventExecutor), plugin);
+    public void registerEvent(
+            Class<? extends Event> event, Listener listener,
+            EventPriority priority, EventExecutor executor, Plugin plugin, boolean ignoreCancel) {
+
+        delegate.registerEvent(event, listener, priority, getWrappedExecutor(executor), plugin);
     }
 
     @Override
@@ -121,8 +132,8 @@ public abstract class LoggedPluginManager implements PluginManager {
     }
 
     @Override
-    public void addPermission(Permission permission) {
-        delegate.addPermission(permission);
+    public void addPermission(Permission perm) {
+        delegate.addPermission(perm);
     }
 
     @Override
@@ -146,7 +157,7 @@ public abstract class LoggedPluginManager implements PluginManager {
     }
 
     @Override
-    public void enablePlugin(@NotNull Plugin plugin) {
+    public void enablePlugin(Plugin plugin) {
         delegate.enablePlugin(plugin);
     }
 
@@ -211,8 +222,8 @@ public abstract class LoggedPluginManager implements PluginManager {
     }
 
     @Override
-    public void removePermission(Permission permission) {
-        delegate.removePermission(permission);
+    public void removePermission(Permission perm) {
+        delegate.removePermission(perm);
     }
 
     @Override

@@ -11,50 +11,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.*;
 
-/**
- * Provides default implementations of {@link ListeningExecutorService}
- * execution methods. This class implements the <tt>submit</tt>,
- * <tt>invokeAny</tt> and <tt>invokeAll</tt> methods using a
- * {@link ListenableFutureTask} returned by <tt>newTaskFor</tt>. For example,
- * the implementation of <tt>submit(Runnable)</tt> creates an associated
- * <tt>ListenableFutureTask</tt> that is executed and returned.
- *
- * @author Doug Lea
- */
 abstract class AbstractListeningService implements BukkitScheduledExecutorService {
-    /**
-     * Represents a runnable abstract listenable future task.
-     *
-     * @param <T>
-     * @author Kristian
-     */
     public static abstract class RunnableAbstractFuture<T>
             extends AbstractFuture<T> implements RunnableFuture<T> {
 
     }
 
-    /**
-     * Returns a <tt>ListenableFutureTask</tt> for the given runnable and
-     * default value.
-     *
-     * @param runnable - the runnable task being wrapped
-     * @param value    - the default value for the returned future
-     * @return a <tt>ListenableFutureTask</tt> which when run will run the
-     * underlying runnable and which, as a <tt>Future</tt>, will yield
-     * the given value as its result and provide for cancellation of the
-     * underlying task.
-     */
     protected abstract <T> RunnableAbstractFuture<T> newTaskFor(Runnable runnable, T value);
 
-    /**
-     * Returns a <tt>ListenableFutureTask</tt> for the given callable task.
-     *
-     * @param callable - the callable task being wrapped
-     * @return a <tt>ListenableFutureTask</tt> which when run will call the
-     * underlying callable and which, as a <tt>Future</tt>, will yield
-     * the callable's result as its result and provide for cancellation
-     * of the underlying task.
-     */
     protected abstract <T> RunnableAbstractFuture<T> newTaskFor(Callable<T> callable);
 
     @Override
@@ -87,9 +51,6 @@ abstract class AbstractListeningService implements BukkitScheduledExecutorServic
         return ftask;
     }
 
-    /**
-     * The main mechanics of invokeAny.
-     */
     private <T> T doInvokeAny(Collection<? extends Callable<T>> tasks, boolean timed, long nanos)
             throws InterruptedException, ExecutionException, TimeoutException {
         if (tasks == null) {
@@ -102,20 +63,10 @@ abstract class AbstractListeningService implements BukkitScheduledExecutorServic
         List<Future<T>> futures = new ArrayList<>(ntasks);
         ExecutorCompletionService<T> ecs = new ExecutorCompletionService<>(this);
 
-        // For efficiency, especially in executors with limited
-        // parallelism, check to see if previously submitted tasks are
-        // done before submitting more of them. This interleaving
-        // plus the exception mechanics account for messiness of main
-        // loop.
-
         try {
-            // Record exceptions so that if we fail to obtain any
-            // result, we can throw the last exception we got.
             ExecutionException ee = null;
             long lastTime = timed ? System.nanoTime() : 0;
             Iterator<? extends Callable<T>> it = tasks.iterator();
-
-            // Start one task for sure; the rest incrementally
             futures.add(ecs.submit(it.next()));
             --ntasks;
             int active = 1;
@@ -171,7 +122,6 @@ abstract class AbstractListeningService implements BukkitScheduledExecutorServic
         try {
             return doInvokeAny(tasks, false, 0);
         } catch (TimeoutException cannotHappen) {
-            // assert false;
             return null;
         }
     }
@@ -231,9 +181,6 @@ abstract class AbstractListeningService implements BukkitScheduledExecutorServic
             }
 
             long lastTime = System.nanoTime();
-
-            // Interleave time checks and calls to execute in case
-            // executor doesn't have any/much parallelism.
             Iterator<Future<T>> it = futures.iterator();
             while (it.hasNext()) {
                 execute((Runnable) (it.next()));

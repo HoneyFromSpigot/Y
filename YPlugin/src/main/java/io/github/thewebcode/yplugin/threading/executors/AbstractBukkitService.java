@@ -38,12 +38,10 @@ abstract class AbstractBukkitService extends AbstractListeningService {
         if (command instanceof RunnableFuture) {
             tasks.add(getTask(command), (Future<?>) command);
         } else {
-            // Submit it first
             submit(command);
         }
     }
 
-    // Bridge to Bukkit
     protected abstract BukkitTask getTask(Runnable command);
 
     protected abstract BukkitTask getLaterTask(Runnable task, long ticks);
@@ -54,8 +52,6 @@ abstract class AbstractBukkitService extends AbstractListeningService {
     public List<Runnable> shutdownNow() {
         shutdown();
         tasks.cancel();
-
-        // We don't support this
         return Collections.emptyList();
     }
 
@@ -80,8 +76,6 @@ abstract class AbstractBukkitService extends AbstractListeningService {
 
     public <V> ListenableScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit) {
         long ticks = toTicks(delay, unit);
-
-        // Construct future task and Bukkit task
         CallableTask<V> task = new CallableTask<>(callable);
         BukkitTask bukkitTask = getLaterTask(task, ticks);
 
@@ -94,15 +88,11 @@ abstract class AbstractBukkitService extends AbstractListeningService {
 
         long ticksInitial = toTicks(initialDelay, unit);
         long ticksDelay = toTicks(period, unit);
-
-        // Construct future task and Bukkit task
         CallableTask<?> task = new CallableTask<Object>(Executors.callable(command)) {
             protected void compute() {
-                // Do nothing more. This future can only be finished by cancellation
                 try {
                     compute.call();
                 } catch (Exception e) {
-                    // Let Bukkit handle this
                     throw Throwables.propagate(e);
                 }
             }
@@ -115,7 +105,6 @@ abstract class AbstractBukkitService extends AbstractListeningService {
                 ticksDelay * NANOSECONDS_PER_TICK);
     }
 
-    // Not supported!
     @Deprecated
     public ListenableScheduledFuture<?> scheduleWithFixedDelay(Runnable command, long initialDelay, long delay, TimeUnit unit) {
         return scheduleAtFixedRate(command, initialDelay, delay, unit);
