@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 public class TestCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        //Just using this for some testing purposes
         return false;
     }
 }
