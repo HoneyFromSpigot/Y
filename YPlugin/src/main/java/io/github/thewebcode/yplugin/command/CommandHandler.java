@@ -239,20 +239,9 @@ public class CommandHandler implements CommandExecutor {
 	}
 
 	public void registerCommandsByPackage(String pkg) {
-		System.out.println("Registering Commands....");
-		/*
-		Reflections reflections = new Reflections(new ConfigurationBuilder()
-				.setScanners(new SubTypesScanner(false), new ResourcesScanner()));
-
-		 */
-
 		Reflections reflections = new Reflections("io.github.thewebcode.yplugin.command.commands", new SubTypesScanner(false));
 
 		Set<Class<?>> commandClasses = reflections.getSubTypesOf(Object.class);
-
-		commandClasses.forEach(clazz -> {
-			System.out.println("CMD CL:  " + clazz.getSimpleName());
-		});
 
 
 		Set<Object> commandClassInstances = new HashSet<>();

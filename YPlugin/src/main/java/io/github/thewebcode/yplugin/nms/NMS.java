@@ -2,12 +2,7 @@ package io.github.thewebcode.yplugin.nms;
 
 
 import io.github.thewebcode.yplugin.chat.Chat;
-import io.github.thewebcode.yplugin.nms.minecraft_1_20_R1.ActionMessageHandler_1_20_R1;
-import io.github.thewebcode.yplugin.nms.minecraft_1_20_R1.ParticleEffectsHandler_1_20_R1;
-import io.github.thewebcode.yplugin.nms.minecraft_1_20_R1.UnhandledStackTrace_1_20_R1;
-import io.github.thewebcode.yplugin.nms.nonbreaking.NonBreakingForceRespawnHandler;
 import io.github.thewebcode.yplugin.nms.nonbreaking.NonBreakingInventoryHandler;
-import io.github.thewebcode.yplugin.nms.nonbreaking.NonBreakingTitleHandler;
 import io.github.thewebcode.yplugin.plugin.Plugins;
 
 public class NMS {
@@ -34,6 +29,8 @@ public class NMS {
         Chat.debug("NMS Version is: '" + Plugins.getNmsVersion() + "'");
 
         switch (Plugins.getNmsVersion()) {
+            //TODO: Register 1.20 Nms
+            /*
             case "v1_20_R1":
                 actionMessageHandler = new ActionMessageHandler_1_20_R1();
                 titleHandler = new NonBreakingTitleHandler();
@@ -41,8 +38,11 @@ public class NMS {
                 particleEffectsHandler = new ParticleEffectsHandler_1_20_R1();
                 stackTraceHandler = new UnhandledStackTrace_1_20_R1();
                 break;
+
+             */
             default:
-                throw new IllegalStateException("Unsupported NMS Version: " + Plugins.getNmsVersion());
+                //throw new IllegalStateException("Unsupported NMS Version: " + Plugins.getNmsVersion());
+                break;
         }
 
         if (stackTraceHandler != null) {

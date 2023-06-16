@@ -3,8 +3,338 @@ version: '1.1.0'
 author: TheWebcode
 main: io.github.thewebcode.yplugin.YPlugin
 api-version: 1.19
+softdepend: [ProtocolLib]
 commands:
-  test:
-  settings:
-    aliases: [ysettings, ys]
-  login:
+  gadgets:
+    usage: /<command>
+  clean:
+    usage: /<command> [subcommand] [-flags]
+  debug:
+    usage: /<command> [action]
+  skull:
+    usage: /<command> <skullValue>
+  AddCurrency:
+    Usage: /addcurrency <Player> <Amount>
+    Permission: yplugin.command.addcurrency
+    Description: Give the sp  ecified the given amount of server-currency. (Tunnels XP, in this case).
+
+  Armor:
+    Usage: /armor <leather, iron, gold, diamond> [player]
+    Permission: yplugin.command.armor
+    Description: Give yourself (or another player) a full set of the desired armor.
+  Back:
+    Usage: /back
+    Permissions:
+      - yplugin.command.back
+      - yplugin.back.endportal
+      - yplugin.back.enderpearl
+      - yplugin.back.netherportal
+      - yplugin.back.death
+      - yplugin.back.warp
+
+    Description:    Teleport yourself to the location you were at before your most recent teleport (or death, warp, etc).
+
+  Ban:
+    Usage:
+      - /ban t:100d21h Ban Reason
+    Permissions:
+      - yplugin.command.ban
+
+    Description:
+        Place a permanent or temporary ban on on a player.
+
+  Blocktext:
+    Usage:
+      - /blocktext <id / id:data> <Text>
+    Permissions:
+      - yplugin.command.blocktext
+    Description: Write text with blocks where you're pointing your cursor!
+
+  Buypremium:
+  Ci:
+  Day:
+  Debug:
+  Enchant:
+  feed:
+  Fw:
+  Fly:
+  Gm:
+  Potion:
+  Night:
+  More:
+  Msg:
+  Maintenance:
+  Item:
+  Id:
+  Heal:
+  Hat:
+  R:
+  Recipe:
+  Removepremium:
+  Rename:
+  Repair:
+  Setspawn:
+  Setwarp:
+  Silence:
+  Skull:
+  Slay:
+  Spawn:
+  Spawnmob:
+  Speed:
+  Tphere:
+  Teleport:
+  tpall:
+  tppos:
+  Time:
+  XP:
+  Unban:
+  Unsilence:
+  Warp:
+  Warps:
+  teleport:
+  rules:
+  tpmenu:
+  tree:
+  god:
+  tpa:
+  i:
+  tpo:
+  grass:
+  set:
+  tp:
+  tphere:
+  tpahere:
+  tpaccept:
+  tpdeny:
+  Workbench:
+
+
+permissions:
+  yplugin.*:
+    description: Gives all permission nodes within YPlugin!
+    children:
+      yplugin.admin.*: true
+      yplugin.command.*: true
+      yplugin.armor.*: true
+      yplugin.builder: true
+  yplugin.command.*:
+    description: Gives access to all the commands within YPlugin.
+    default: op
+    children:
+      yplugin.command.buypremium: true
+      yplugin.command.removepremium: true
+      yplugin.command.addcurrency: true
+      commond.command.armor: true
+      yplugin.command.back: true
+      yplugin.command.blocktext: true
+      yplugin.command.clean: true
+      yplugin.command.ban: true
+      yplugin.command.clearinventory: true
+      yplugin.command.clearinventory.other: true
+      yplugin.command.time: true
+      yplugin.debugmode: true
+      yplugin.command.enchant: true
+      yplugin.command.feed: true
+      yplugin.command.fireworks: true
+      yplugin.command.fly: true
+      yplugin.command.gadgets: true
+      yplugin.command.gamemode: true
+      yplugin.command.god: true
+      yplugin.commands.grass: true
+      yplugin.command.hat: true
+      yplugin.command.heal: true
+      yplugin.command.heal.other: true
+      yplugin.command.id: true
+      yplugin.command.item: true
+      yplugin.command.message: true
+      yplugin.command.more: true
+      yplugin.command.potion: true
+      yplugin.command.recipe: true
+      yplugin.command.repair: true
+      yplugin.command.set: true
+      yplugin.command.setwarp: true
+      yplugin.command.setspawn: true
+      yplugin.command.silence: true
+      yplugin.command.skull: true
+      yplugin.command.slay: true
+      yplugin.command.spawn: true
+      yplugin.command.spawnmob: true
+      yplugin.command.spawnmob.enderdragon: true
+      yplugin.command.speed: true
+      yplugin.command.tpall: true
+      yplugin.command.tphere: true
+      yplugin.command.teleport: true
+      yplugin.command.teleportother: true
+      yplugin.command.tppos: true
+      yplugin.command.tpa: true
+      yplugin.command.tree: true
+      yplugin.command.warps: true
+      yplugin.command.warp: true
+      yplugin.command.workbench: true
+  yplugin.admin.*:
+    description: Gives access to all the administrative commands and tasks YPlugin.
+    default: op
+    children:
+      yplugin.admin: true
+      yplugin.command.gadgets: true
+      yplugin.maintenance.toggle: true
+      yplugin.maintenance.join: true
+      yplugin.command.*: true
+      yplugin.admin.antikick: true
+      yplugin.armor.*: true
+  yplugin.armor.*:
+    description: Gives players access to spawning all the armor sets!
+    default: op
+    children:
+      yplugin.armor.leather: true
+      yplugin.armor.iron: true
+      yplugin.armor.gold: true
+      yplugin.armor.chain: true
+      yplugin.armor.diamond: true
+  yplugin.builder:
+    description: Allows players to break and place blocks, bypassing config options.
+    default: op
+    children:
+      yplugin.block.break: true
+      yplugin.block.place: true
+  # Below are all the permission nodes
+  # Required for armor sets!
+  yplugin.armor.diamond:
+    description: Gives a player access to spawning a diamond armor set for themselves.
+  yplugin.armor.chain:
+    description: Gives a player access to spawning a chain armor set for themselves.
+  yplugin.armor.gold:
+    description: Gives a player access to spawning a gold armor set for themselves.
+  yplugin.armor.iron:
+    description: Gives a player access to spawning an iron armor set for themselves.
+  yplugin.armor.leather:
+    description: Gives a player access to spawning a leather armor set for themselves.
+  # Admin related Permission nodes:
+  # KickStick, Anti Kick, Debug Mode, Maintenance mode options.
+  yplugin.admin.antikick:
+    description: Allows a player to forbid from being kicked.
+  yplugin.admin.kickstick:
+    description: Allows players to use the kickstick!
+  yplugin.debugmode:
+    description: Allow a player to enter debug mode! (GRANT CAREFULLY)
+  yplugin.maintenance.toggle:
+    description: Allows players to toggle maintenance mode on the server.
+    default: op
+  yplugin.maintenance.join:
+    description: Allows players to join when the server is in maintenance mode.
+    default: op
+  # Below are many many many command-based permission
+  # Nodes, associated with regulating the access of command between players!
+  yplugin.command.addcurrency:
+    description: Allows players to use the addcurrency command, giving players the premium currency.
+    default: op
+  yplugin.command.setspawn:
+    description: Allows a player to set the spawn of the world they're currently in.
+  yplugin.command.warps:
+    description: Allows players to use the warps command.
+  yplugin.command.workbench:
+    description: Allows players to use the workbench command.
+  yplugin.command.warp:
+    description: Allows players to use the warp command.
+  yplugin.command.tree:
+    description: Allows players to generate trees via a command.
+  yplugin.command.tpa:
+    description: Allows players to use the tpa command.
+  yplugin.command.tppos:
+    description: Allows players to use the tppos command.
+  yplugin.command.teleportother:
+    description: Allows players to use the tpother command.
+  yplugin.command.tphere:
+    description: Allows players to use the teleport here command.
+  yplugin.command.teleport:
+    description: Allows players to use the teleport command.
+  yplugin.command.tpall:
+    description: Allows players to use the teleport-all command.
+  yplugin.command.speed:
+    description: Allows players to use the speed command to change their speed.
+  yplugin.command.spawn:
+    description: Allows players to use the spawn command.
+  yplugin.command.spawnmob:
+    description: Allows players to use the spawnmob command.
+  yplugin.command.spawnmob.enderdragon:
+    description: Allows players to use the spawnmob command, spawning an enderdragon.
+  yplugin.command.slay:
+    description: Allows players to use the slay command.
+  yplugin.command.skull:
+    description: Allows players to create player skulls using the skull command.
+  yplugin.command.setwarp:
+    description: Allows players to use the setwarp command.
+  yplugin.command.silence:
+    description: Allows players to use the silence command.
+  yplugin.silence.bypass:
+    description: Allows players to bypass the silencing of chat
+  yplugin.command.set:
+    description: Allows players to use the set command, for managing firstPageEnabled sets.
+  yplugin.command.recipe:
+    description: Allows player to use the recipe command.
+  yplugin.command.repair:
+    description: Allows player to use the repair command.
+  yplugin.command.potion:
+    description: Allows players to use the potions command.
+    default: op
+  yplugin.command.more:
+    description: Allows players to use the more command, giving them more items on the firstPageEnabled in their hand.
+  yplugin.command.message:
+    description: Allows players to use the message command.
+  yplugin.command.id:
+    description: Allows players to use the id command.
+  yplugin.command.item:
+    description: Allows players to use the firstPageEnabled command.
+  yplugin.command.hat:
+    description: Allows players to use the hat command.
+  yplugin.command.heal:
+    description: Allows players to use the heal command.
+  yplugin.command.heal.other:
+    description: Allows players to use the heal command on others.
+  yplugin.commands.grass:
+    description: Allows players to use the grass command.
+  yplugin.command.gamemode:
+    description: Allows players to use the gamemode command.
+  yplugin.command.god:
+    description: Allows players to use the godmode command.
+  yplugin.command.gadgets:
+    description: Allows players to use the gadgets command.
+  yplugin.command.fireworks:
+    description: Allows players to use the fireworks command.
+  yplugin.command.fly:
+    description: Allows players to use the fly command.
+  yplugin.command.enchant:
+    description: Allows players to use the enchant command.
+    default: op
+  yplugin.command.feed:
+    description: Allows a player to feed themselves (or others) via the feed command
+  yplugin.command.time:
+    description: Allows players to use all time-based commands.
+    default: op
+  yplugin.command.armor:
+    description: Allows players to use the Armor command.
+    default: op
+  yplugin.command.back:
+    description: Allows players to use the back command
+    default: op
+  yplugin.command.blocktext:
+    description: Allows players to use the blocktext command
+    default: op
+  yplugin.command.clean:
+    description: Allows players to use the Clean Command and all its subcommands
+    children:
+      yplugin.command.clean.entities: true
+      yplugin.command.clean.mobs: true
+  yplugin.command.clearinventory:
+    description: Allows players to use the ClearInventory Command
+  yplugin.command.clearinventory.other:
+    description: Allows player to use the ClearInventory Command on other players.
+  yplugin.ban:
+    description: Allows players to use the ban command
+    default: op
+  yplugin.command.buypremium:
+    description: Allows players to use the buypremium command
+    default: op
+  yplugin.command.removepremium:
+    description: Allows players to use the removepremium command
+    default:

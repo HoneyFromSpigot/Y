@@ -10,9 +10,9 @@ import io.github.thewebcode.yplugin.utilities.StringUtil;
 import org.bukkit.entity.Player;
 
 public class DebugDefaultScoreboard implements DebugAction {
-    private static final YPlugin commons = YPlugin.getInstance();
+    private static final YPlugin yPlugin = YPlugin.getInstance();
 
-    private static BoardManager manager = commons.getScoreboardManager();
+    private static BoardManager manager = yPlugin.getScoreboardManager();
 
     private ScoreboardWrapper wrapper = manager.builder().title("&cDefault board!").dummyObjective().type(ScoreboardType.NORMAL).entry(1, "Line uno").entry(2, "Line deus").build();
 
@@ -31,7 +31,7 @@ public class DebugDefaultScoreboard implements DebugAction {
             info.entry(i + 1, args[i]);
         }
 
-        commons.debug("Assigned entries " + StringUtil.joinString(args, ", ") + " to default wrapper");
+        yPlugin.debug("Assigned entries " + StringUtil.joinString(args, ", ") + " to default wrapper");
     }
 
     @Override

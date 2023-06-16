@@ -12,7 +12,7 @@ import io.github.thewebcode.yplugin.yml.*;
 		configMode = ConfigMode.DEFAULT
 )
 
-public class CommonsYamlConfiguration extends YamlConfig implements Configuration {
+public class YPluginYamlConfiguration extends YamlConfig implements Configuration {
 	@Path("Commands.register-commands")
 	@Comments({
 			"By default YPlugin includes a plethora of commands",
@@ -69,7 +69,7 @@ public class CommonsYamlConfiguration extends YamlConfig implements Configuratio
 
 	@Path("Server.silence-chat")
 	@Comments({
-			"When enabled, only players with 'commons.silence.bypass'",
+			"When enabled, only players with 'yplugin.silence.bypass'",
 			"in their permissions will be able to talk"
 	})
 	private boolean silenceChat = false;
@@ -149,7 +149,7 @@ public class CommonsYamlConfiguration extends YamlConfig implements Configuratio
 	@Path("Server.Maintenance-Mode.enabled")
 	@Comments({
 			"Maintenance mode enables admins, operators, and users",
-			"with the 'commons.maintenance.join' permission",
+			"with the 'yplugin.maintenance.join' permission",
 			"to join while the server is undergoing maintenance.",
 			"At the same time, it keeps all players not permitted, out, until",
 			"maintenance is complete!",

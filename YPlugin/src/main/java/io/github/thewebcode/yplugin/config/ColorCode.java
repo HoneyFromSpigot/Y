@@ -8,20 +8,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum ColorCode {
-    BLACK("commons.color.black", ChatColor.BLACK),
-    DARK_BLUE("commons.color.darkblue", ChatColor.DARK_BLUE),
-    BLUE("commons.color.blue", ChatColor.BLUE),
-    GREEN("commons.color.green", ChatColor.GREEN),
-    DARK_GREEN("commons.color.darkgreen", ChatColor.DARK_GREEN),
-    GOLD("commons.color.gold", ChatColor.GOLD),
-    GRAY("commons.color.gray", ChatColor.GRAY),
-    DARK_GRAY("commons.color.darkgray", ChatColor.DARK_GRAY),
-    RED("commons.color.red", ChatColor.RED),
-    DARK_RED("commons.color.darkred", ChatColor.DARK_RED),
-    LIGHT_PURPLE("commons.color.lightpurple", ChatColor.LIGHT_PURPLE),
-    DARK_PURPLE("commons.color.darkpurple", ChatColor.DARK_PURPLE),
-    YELLOW("commons.color.yellow", ChatColor.YELLOW),
-    WHITE("commons.color.white", ChatColor.WHITE);
+    BLACK("yplugin.color.black", ChatColor.BLACK),
+    DARK_BLUE("yplugin.color.darkblue", ChatColor.DARK_BLUE),
+    BLUE("yplugin.color.blue", ChatColor.BLUE),
+    GREEN("yplugin.color.green", ChatColor.GREEN),
+    DARK_GREEN("yplugin.color.darkgreen", ChatColor.DARK_GREEN),
+    GOLD("yplugin.color.gold", ChatColor.GOLD),
+    GRAY("yplugin.color.gray", ChatColor.GRAY),
+    DARK_GRAY("yplugin.color.darkgray", ChatColor.DARK_GRAY),
+    RED("yplugin.color.red", ChatColor.RED),
+    DARK_RED("yplugin.color.darkred", ChatColor.DARK_RED),
+    LIGHT_PURPLE("yplugin.color.lightpurple", ChatColor.LIGHT_PURPLE),
+    DARK_PURPLE("yplugin.color.darkpurple", ChatColor.DARK_PURPLE),
+    YELLOW("yplugin.color.yellow", ChatColor.YELLOW),
+    WHITE("yplugin.color.white", ChatColor.WHITE);
 
     private String permission;
     private ChatColor color;

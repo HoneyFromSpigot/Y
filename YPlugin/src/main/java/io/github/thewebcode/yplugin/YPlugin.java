@@ -9,7 +9,7 @@ import io.github.thewebcode.yplugin.command.commands.CleanCommand;
 import io.github.thewebcode.yplugin.command.commands.DebugModeCommand;
 import io.github.thewebcode.yplugin.command.commands.GadgetsCommand;
 import io.github.thewebcode.yplugin.command.commands.SkullCommand;
-import io.github.thewebcode.yplugin.config.CommonsYamlConfiguration;
+import io.github.thewebcode.yplugin.config.YPluginYamlConfiguration;
 import io.github.thewebcode.yplugin.config.Configuration;
 import io.github.thewebcode.yplugin.file.TextFile;
 import io.github.thewebcode.yplugin.item.ItemSetManager;
@@ -82,12 +82,12 @@ public class YPlugin extends IYBukkitPlugin {
                 new CleanCommand()
         );
 
-        if (true) {
+        if (getConfiguration().registerCommands()) {
             try {
                 registerCommandsByPackage("io.github.thewebcode.yplugin.command.commands");
             } catch (RegisterCommandMethodException e) {
                 e.printStackTrace();
-                debug("Unable to register commands; If you're using the no-commands version of commons assure '<register-commands>' inside of Config.xml is set to false. Otherwise, send the stack trace to our developers for assistance.");
+                debug("Unable to register commands; If you're using the no-commands version of YPlugin assure '<register-commands>' inside of Config.xml is set to false. Otherwise, send the stack trace to our developers for assistance.");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -393,8 +393,8 @@ public class YPlugin extends IYBukkitPlugin {
         TeleportMenuSettings.init(TELEPORT_MENU_DISABLED_LOCATION);
         if (!ymlConfigFile.exists()) {
 
-            globalConfig = new CommonsYamlConfiguration();
-            CommonsYamlConfiguration ymlConfig = new CommonsYamlConfiguration();
+            globalConfig = new YPluginYamlConfiguration();
+            YPluginYamlConfiguration ymlConfig = new YPluginYamlConfiguration();
 
             try {
                 ymlConfig.init(ymlConfigFile);
@@ -405,9 +405,9 @@ public class YPlugin extends IYBukkitPlugin {
             return;
         }
 
-        globalConfig = new CommonsYamlConfiguration();
+        globalConfig = new YPluginYamlConfiguration();
         try {
-            ((CommonsYamlConfiguration) globalConfig).init(ymlConfigFile);
+            ((YPluginYamlConfiguration) globalConfig).init(ymlConfigFile);
         } catch (InvalidConfigurationException e) {
             e.printStackTrace();
             debug(
@@ -418,7 +418,7 @@ public class YPlugin extends IYBukkitPlugin {
                     "it and regenerate it via restarting the server",
                     "to continue!",
                     "----------------",
-                    "COMMONS HAS BEEN DISABLED",
+                    "YPLUGIN HAS BEEN DISABLED",
                     "----------------");
             Plugins.disablePlugin(this);
             return;
