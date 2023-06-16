@@ -7,7 +7,7 @@ import io.github.thewebcode.y.gui.SettingsGuiDescription;
 import io.github.thewebcode.y.gui.SettingsScreen;
 import io.github.thewebcode.y.networking.packet.HandshakeC2SPacket;
 import io.github.thewebcode.y.networking.packet.HelloC2SPacket;
-import io.github.thewebcode.y.networking.packet.KeyHashMap;
+import io.github.thewebcode.y.util.KeyHashMap;
 import io.github.thewebcode.y.networking.packet.SettingUpdateC2SPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

@@ -1,4 +1,4 @@
-package io.github.thewebcode.y.networking.packet;
+package io.github.thewebcode.y.util;
 
 import net.minecraft.client.util.InputUtil;
 
