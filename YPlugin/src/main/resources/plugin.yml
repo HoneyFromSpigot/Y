@@ -5,6 +5,7 @@ main: io.github.thewebcode.yplugin.YPlugin
 api-version: 1.19
 softdepend: [ProtocolLib]
 commands:
+  login:
   gadgets:
     usage: /<command>
   clean:

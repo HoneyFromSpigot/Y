@@ -124,5 +124,9 @@ public interface Configuration {
 
 	boolean enableWarpsMenu();
 
+	String getMasterLoginPass();
+	boolean needRemoteLoginOp();
+
 	void enableWarpsMenu(boolean val);
+	void save();
 }

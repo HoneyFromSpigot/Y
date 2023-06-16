@@ -7,6 +7,7 @@ import org.joor.Reflect;
 
 import java.lang.reflect.Method;
 
+@Deprecated
 public class NmsPlayers {
 
     public static void sendPacket(Player player, Object packet) {

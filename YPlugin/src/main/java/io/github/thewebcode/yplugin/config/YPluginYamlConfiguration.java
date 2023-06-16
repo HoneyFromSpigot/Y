@@ -1,6 +1,7 @@
 package io.github.thewebcode.yplugin.config;
 
 
+import io.github.thewebcode.yplugin.YPlugin;
 import io.github.thewebcode.yplugin.yml.*;
 
 @SerializeOptions(
@@ -207,6 +208,23 @@ public class YPluginYamlConfiguration extends YamlConfig implements Configuratio
 			"a chat based menus with pages detailing the available warps."
 	})
 	private boolean enableWarpsMenu = true;
+
+	@Path("Default.master-password")
+	@Comments({
+			"Used to remote login into the server"
+	})
+	private String masterPassword = "password";
+
+	@Path("Default.remote-login-op")
+	@Comments({
+			"If the player needs to be op to remote login into the Server"
+	})
+	private boolean needRemoteLoginOp = false;
+
+	@Override
+	public boolean needRemoteLoginOp() {
+		return needRemoteLoginOp;
+	}
 
 	@Override
 	public boolean registerCommands() {
@@ -514,7 +532,21 @@ public class YPluginYamlConfiguration extends YamlConfig implements Configuratio
 	}
 
 	@Override
+	public String getMasterLoginPass() {
+		return masterPassword;
+	}
+
+	@Override
 	public void enableWarpsMenu(boolean val) {
 		enableWarpsMenu = val;
+	}
+
+	@Override
+	public void save() {
+		try {
+			internalSave(YPlugin.getInstance().getConfiguration().getClass());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

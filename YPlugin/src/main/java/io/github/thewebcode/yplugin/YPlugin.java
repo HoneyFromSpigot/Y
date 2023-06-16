@@ -15,6 +15,7 @@ import io.github.thewebcode.yplugin.file.TextFile;
 import io.github.thewebcode.yplugin.item.ItemSetManager;
 import io.github.thewebcode.yplugin.item.SavedItemManager;
 import io.github.thewebcode.yplugin.listeners.*;
+import io.github.thewebcode.yplugin.networking.MessageOutboundHandler;
 import io.github.thewebcode.yplugin.nms.NMS;
 import io.github.thewebcode.yplugin.player.Players;
 import io.github.thewebcode.yplugin.plugin.IYBukkitPlugin;
@@ -104,6 +105,10 @@ public class YPlugin extends IYBukkitPlugin {
         for (Player player : Players.allPlayers()) {
             players.addData(player);
         }
+
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            new MessageOutboundHandler.Builder(player).build();
+        });
     }
 
     @Override
@@ -113,6 +118,9 @@ public class YPlugin extends IYBukkitPlugin {
             Players.removeData(playerId);
         }
         Warps.saveWarps();
+        Bukkit.getOnlinePlayers().forEach(p -> {
+            new MessageOutboundHandler.Builder(p).build().detach();
+        });
     }
 
     @Override

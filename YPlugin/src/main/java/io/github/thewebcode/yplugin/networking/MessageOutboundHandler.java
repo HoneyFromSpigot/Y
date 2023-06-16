@@ -21,14 +21,14 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
     private final Player player;
     private final UUID playerUUID;
 
-    public MessageOutboundHandler(Player player) {
+    private MessageOutboundHandler(Player player) {
         this.player = player;
         this.playerUUID = player.getUniqueId();
 
         attach(player);
     }
 
-    private void detach(Player player){
+    public void detach(){
         try{
             EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
             PlayerConnection connection = entityPlayer.c;
@@ -42,6 +42,7 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
         } catch (NoSuchElementException ignored) {}
     }
 
+
     private void attach(Player player) {
         try {
             EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
@@ -50,7 +51,7 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
             Field field = connection.getClass().getField("h");
             NetworkManager networkManager = (NetworkManager) field.get(connection);
             ChannelPipeline pipeline = networkManager.m.pipeline();
-            detach(player);
+            detach();
             pipeline.addAfter("decoder", NAME, new MessageToMessageDecoder<PacketPlayInCustomPayload>() {
                 @Override
                 protected void decode(ChannelHandlerContext channelHandlerContext, PacketPlayInCustomPayload packetPlayInCustomPayload, List<Object> list) throws Exception {
@@ -58,6 +59,8 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
                     read(packetPlayInCustomPayload);
                 }
             });
+
+            System.out.println("Attached to " + player.getName());
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -67,6 +70,7 @@ public class MessageOutboundHandler extends ChannelOutboundHandlerAdapter {
         String packet = payload.c.toString();
         if(packet.contains("yfabric")) {
             String packetName = packet.replace("yfabric:", "");
+            PacketDataUtil.handle(new Packet(payload.d, packetName, player));
         }
     }
 

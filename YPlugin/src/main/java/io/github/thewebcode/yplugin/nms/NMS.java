@@ -2,8 +2,10 @@ package io.github.thewebcode.yplugin.nms;
 
 
 import io.github.thewebcode.yplugin.chat.Chat;
+import io.github.thewebcode.yplugin.nms.minecraft_1_20_R1.NmsPlayer_1_20_R1;
 import io.github.thewebcode.yplugin.nms.nonbreaking.NonBreakingInventoryHandler;
 import io.github.thewebcode.yplugin.plugin.Plugins;
+import org.bukkit.entity.Player;
 
 public class NMS {
 
@@ -20,6 +22,15 @@ public class NMS {
     private static ParticleEffectsHandler particleEffectsHandler = null;
 
     private static boolean initialized = false;
+
+    public static NmsPlayer getNMSPlayer(Player player) {
+        switch(Plugins.getNmsVersion()){
+            case "v1_20_R1":
+                return new NmsPlayer_1_20_R1(player);
+            default:
+                return null;
+        }
+    }
 
     public static void init() {
         if (initialized) {

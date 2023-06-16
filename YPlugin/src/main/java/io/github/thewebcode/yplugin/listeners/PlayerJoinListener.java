@@ -2,6 +2,7 @@ package io.github.thewebcode.yplugin.listeners;
 
 import io.github.thewebcode.yplugin.YPlugin;
 import io.github.thewebcode.yplugin.config.Configuration;
+import io.github.thewebcode.yplugin.networking.MessageOutboundHandler;
 import io.github.thewebcode.yplugin.player.MinecraftPlayer;
 import io.github.thewebcode.yplugin.world.Worlds;
 import org.bukkit.entity.Player;
@@ -27,6 +28,7 @@ public class PlayerJoinListener implements Listener {
 		player.setFlySpeed((float) MinecraftPlayer.DEFAULT_FLY_SPEED);
 		player.setWalkSpeed((float) MinecraftPlayer.DEFAULT_WALK_SPEED);
 
+		new MessageOutboundHandler.Builder(player).build();
 		if (!config.enableJoinMessages()) {
 			event.setJoinMessage(null);
 		}

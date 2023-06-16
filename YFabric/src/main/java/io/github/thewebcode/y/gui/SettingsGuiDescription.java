@@ -2,9 +2,7 @@ package io.github.thewebcode.y.gui;
 
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.*;
-import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
-import io.github.cottonmc.cotton.gui.widget.data.Texture;
 import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
 import io.github.thewebcode.y.YFabricMod;
 import io.github.thewebcode.y.gui.widget.YToggleButton;
@@ -15,7 +13,6 @@ import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SettingsGuiDescription extends LightweightGuiDescription {
@@ -49,6 +46,7 @@ public class SettingsGuiDescription extends LightweightGuiDescription {
             switch (dataType.toLowerCase()){
                 case "string":
                     WTextField textField = new WTextField();
+                    textField.setMaxLength(200);
                     textField.setText(value);
                     tallPanel.add(textField, 8, keyYPos, 5, 1);
                     widgetMap.put(key, textField);
@@ -61,6 +59,7 @@ public class SettingsGuiDescription extends LightweightGuiDescription {
                     break;
                 case "double", "int":
                     WTextField tf = new WTextField();
+                    tf.setMaxLength(200);
                     tf.setText(value);
                     tallPanel.add(tf, 8, keyYPos, 2, 1);
                     widgetMap.put(key, tf);
@@ -102,7 +101,7 @@ public class SettingsGuiDescription extends LightweightGuiDescription {
                 sb.append("\\{" + RSK + "}");
 
                 updatedSettingsMap.keySet().forEach(key -> {
-                    String settingPart = "{" + key + "|" + updatedSettingsMap.get(key) + "}";
+                    String settingPart = "{" + key + "|" + updatedSettingsMap.get(key).replace("§", "&") + "}";
                     sb.append(settingPart);
                 });
 
