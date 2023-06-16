@@ -1,6 +1,5 @@
 package io.github.thewebcode.y.networking;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.thewebcode.y.YFabricMod;
 import io.github.thewebcode.y.gui.LoginGuiDescription;
 import io.github.thewebcode.y.gui.LoginScreen;
@@ -10,14 +9,8 @@ import io.github.thewebcode.y.networking.packet.HandshakeC2SPacket;
 import io.github.thewebcode.y.networking.packet.HelloC2SPacket;
 import io.github.thewebcode.y.networking.packet.SettingUpdateC2SPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -32,6 +25,9 @@ public class ModMessages {
     public static final Identifier HANDSHAKE_S2C = new Identifier("yplugin", "handshake_s2c");
     public static final Identifier OPEN_SETTINGS = new Identifier("yplugin", "open_settings");
 
+    public static final Identifier SHUFFLE_SETTINGS_S2C = new Identifier("yplugin", "shuffle_settings_s2c");
+    public static final Identifier RESEND_HELLO_S2C = new Identifier("yplugin", "resend_hello");
+
     public static void registerC2SPackets(){
         ServerPlayNetworking.registerGlobalReceiver(Y_FABRIC_HELLO, HelloC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(UPDATE_SETTINGS, SettingUpdateC2SPacket::receive);
@@ -43,6 +39,14 @@ public class ModMessages {
             MinecraftClient.getInstance().execute(() -> {
                 MinecraftClient.getInstance().setScreen(new LoginScreen(new LoginGuiDescription()));
             });
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(RESEND_HELLO_S2C, (client, handler, buf, responseSender) -> {
+            ClientPlayNetworking.send(ModMessages.Y_FABRIC_HELLO, new HelloC2SPacket(MinecraftClient.getInstance().player.getName().getString()).value());
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(SHUFFLE_SETTINGS_S2C, (client, handler, buf, responsesender) -> {
+            client.player.sendMessage(Text.of("Shuffling settings..."), false);
         });
 
         ClientPlayNetworking.registerGlobalReceiver(HANDSHAKE_S2C, (client, handler, buf, responseSender) -> {

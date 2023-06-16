@@ -18,6 +18,7 @@ import io.github.thewebcode.yplugin.listeners.*;
 import io.github.thewebcode.yplugin.networking.MessageOutboundHandler;
 import io.github.thewebcode.yplugin.nms.NMS;
 import io.github.thewebcode.yplugin.player.Players;
+import io.github.thewebcode.yplugin.player.YClientPlayerManager;
 import io.github.thewebcode.yplugin.plugin.IYBukkitPlugin;
 import io.github.thewebcode.yplugin.plugin.Plugins;
 import io.github.thewebcode.yplugin.warp.Warps;
@@ -59,6 +60,7 @@ public class YPlugin extends IYBukkitPlugin {
     private PrivateMessageManager privateMessageManager;
 
     private ChatMenuCommandListener chatMenuListener = null;
+    private YClientPlayerManager clientPlayerManager = new YClientPlayerManager();
 
     public static synchronized YPlugin getInstance() {
         if (plugin == null) {
@@ -109,6 +111,7 @@ public class YPlugin extends IYBukkitPlugin {
         Bukkit.getOnlinePlayers().forEach(player -> {
             new MessageOutboundHandler.Builder(player).build();
         });
+        clientPlayerManager.flush();
     }
 
     @Override
@@ -431,6 +434,9 @@ public class YPlugin extends IYBukkitPlugin {
             Plugins.disablePlugin(this);
             return;
         }
+    }
 
+    public YClientPlayerManager getClientPlayerManager() {
+        return clientPlayerManager;
     }
 }

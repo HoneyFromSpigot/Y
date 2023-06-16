@@ -20,6 +20,7 @@ public class PlayerQuitListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
+        YPlugin.getInstance().getClientPlayerManager().removePlayer(event.getPlayer());
         UUID playerId = event.getPlayer().getUniqueId();
         if (!config.enableJoinMessages()) {
             event.setQuitMessage(null);

@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 public class PacketDataUtil {
     public static void handle(Packet packet){
         Configuration configuration = YPlugin.getInstance().getConfiguration();
-
+        Player player = packet.getPlayer();
         String packetName = packet.getName();
         ByteBuf byteBuf = packet.getBuf();
         switch (packetName.toLowerCase()){
@@ -121,6 +121,7 @@ public class PacketDataUtil {
                 }else bukkitPlayer.sendMessage("§c§lYMod §r§7» §cIncorrect password! Please try again!");
                 break;
             case "hello":
+                YPlugin.getInstance().getLogger().info("YMod» YHello from " + player.getName() + "!");
                 break;
         }
     }
