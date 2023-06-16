@@ -150,6 +150,7 @@ io/github/thewebcode/yplugin/file/TextFile$Tag.class
 io/github/thewebcode/yplugin/listeners/PlayerKickListener.class
 io/github/thewebcode/yplugin/menus/gadget/GadgetsMenu$GadgetMenuSwitchPageItem.class
 io/github/thewebcode/yplugin/threading/executors/ScheduledListenableFuture.class
+io/github/thewebcode/yplugin/player/YClientPlayerManager.class
 io/github/thewebcode/yplugin/game/event/BulletHitCreatureEvent.class
 io/github/thewebcode/yplugin/menus/warpselection/WarpMenuItem.class
 io/github/thewebcode/yplugin/command/commands/SlayCommand.class

@@ -402,6 +402,7 @@
 /Users/lexseifert/Documents/MC/Minecraft Modding/The Y Project/YPlugin/src/main/java/io/github/thewebcode/yplugin/item/SavedItemManager.java
 /Users/lexseifert/Documents/MC/Minecraft Modding/The Y Project/YPlugin/src/main/java/io/github/thewebcode/yplugin/game/players/IUserManager.java
 /Users/lexseifert/Documents/MC/Minecraft Modding/The Y Project/YPlugin/src/main/java/io/github/thewebcode/yplugin/scoreboard/ScoreboardWrapper.java
+/Users/lexseifert/Documents/MC/Minecraft Modding/The Y Project/YPlugin/src/main/java/io/github/thewebcode/yplugin/player/YClientPlayerManager.java
 /Users/lexseifert/Documents/MC/Minecraft Modding/The Y Project/YPlugin/src/main/java/io/github/thewebcode/yplugin/command/commands/TeleportHereCommand.java
 /Users/lexseifert/Documents/MC/Minecraft Modding/The Y Project/YPlugin/src/main/java/io/github/thewebcode/yplugin/listeners/FireSpreadListener.java
 /Users/lexseifert/Documents/MC/Minecraft Modding/The Y Project/YPlugin/src/main/java/io/github/thewebcode/yplugin/command/Command.java
