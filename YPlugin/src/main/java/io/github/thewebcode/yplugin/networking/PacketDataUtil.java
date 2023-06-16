@@ -121,6 +121,7 @@ public class PacketDataUtil {
                 }else bukkitPlayer.sendMessage("§c§lYMod §r§7» §cIncorrect password! Please try again!");
                 break;
             case "hello":
+                YPlugin.getInstance().getClientPlayerManager().addPlayer(player);
                 YPlugin.getInstance().getLogger().info("YMod» YHello from " + player.getName() + "!");
                 break;
         }
