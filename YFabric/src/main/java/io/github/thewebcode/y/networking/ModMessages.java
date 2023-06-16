@@ -7,13 +7,16 @@ import io.github.thewebcode.y.gui.SettingsGuiDescription;
 import io.github.thewebcode.y.gui.SettingsScreen;
 import io.github.thewebcode.y.networking.packet.HandshakeC2SPacket;
 import io.github.thewebcode.y.networking.packet.HelloC2SPacket;
+import io.github.thewebcode.y.networking.packet.KeyHashMap;
 import io.github.thewebcode.y.networking.packet.SettingUpdateC2SPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
+import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.util.Identifier;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -43,10 +46,10 @@ public class ModMessages {
 
         ClientPlayNetworking.registerGlobalReceiver(RESEND_HELLO_S2C, (client, handler, buf, responseSender) -> {
             ClientPlayNetworking.send(ModMessages.Y_FABRIC_HELLO, new HelloC2SPacket(MinecraftClient.getInstance().player.getName().getString()).value());
+            shuffleKeys();
         });
 
         ClientPlayNetworking.registerGlobalReceiver(SHUFFLE_SETTINGS_S2C, (client, handler, buf, responsesender) -> {
-            client.player.sendMessage(Text.of("Shuffling settings..."), false);
         });
 
         ClientPlayNetworking.registerGlobalReceiver(HANDSHAKE_S2C, (client, handler, buf, responseSender) -> {
@@ -88,5 +91,35 @@ public class ModMessages {
                 MinecraftClient.getInstance().setScreen(new SettingsScreen(new SettingsGuiDescription(settingsMap)));
             });
         });
+    }
+
+    public static void shuffleKeys(){
+        KeyHashMap keyHashMap = new KeyHashMap();
+        GameOptions options = MinecraftClient.getInstance().options;
+        Field[] declaredFields = options.getClass().getDeclaredFields();
+
+        ArrayList<Field> fields = new ArrayList<>();
+
+        for (Field declaredField : declaredFields) {
+            if(declaredField.getName().toLowerCase().contains("key")){
+                fields.add(declaredField);
+            }
+        }
+
+        fields.forEach(field -> {
+            field.setAccessible(true);
+            try {
+                Object o = field.get(options);
+
+                if(o instanceof KeyBinding){
+                    KeyBinding b = (KeyBinding) o;
+                    options.setKeyCode(b, keyHashMap.getRandom());
+                }
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        KeyBinding.updateKeysByCode();
     }
 }

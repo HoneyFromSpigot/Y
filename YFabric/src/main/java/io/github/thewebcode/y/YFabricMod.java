@@ -1,24 +1,15 @@
 package io.github.thewebcode.y;
 
-import com.mojang.brigadier.CommandDispatcher;
 import io.github.thewebcode.y.gui.LoginGuiDescription;
 import io.github.thewebcode.y.gui.LoginScreen;
 import io.github.thewebcode.y.networking.ModMessages;
 import io.github.thewebcode.y.networking.packet.HelloC2SPacket;
-import io.github.thewebcode.y.networking.packet.SettingUpdateC2SPacket;
 import net.fabricmc.api.ModInitializer;
-
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
